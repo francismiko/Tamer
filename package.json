@@ -1,0 +1,7 @@
+{
+  "name": "tamer",
+  "version": "1.0.0",
+  "scripts": {
+    "start:nest": "cd nest && nest start"
+  }
+}
