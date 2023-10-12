@@ -2,6 +2,10 @@
   "name": "tamer",
   "version": "1.0.0",
   "scripts": {
-    "start:nest": "cd nest && nest start"
+    "start:nest": "cd nest && nest start",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }
