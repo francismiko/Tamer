@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public"]
+}
+
+enum UserGender {
+  male
+  female
+  other
+
+  @@schema("public")
+}
+
+enum MessageSender {
+  owner
+  collaborator
+
+  @@schema("public")
+}
+
+enum MessageStatus {
+  pending
+  reject
+  done
+
+  @@schema("public")
+}
+
+enum ExerciseTag {
+  grammar
+  vocabulary
+  listening
+  speaking
+  writing
+  reading
+
+  @@schema("public")
+}
+
+enum ExerciseDifficulty {
+  easy
+  medium
+  hard
+
+  @@schema("public")
+}
+
+enum ExerciseStructure {
+  sentence
+  paragraph
+  article
+
+  @@schema("public")
+}
+
+enum ExerciseValidityStatus {
+  uncertain
+  valid
+  invalid
+
+  @@schema("public")
+}
+
+model User {
+  id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String         @unique
+  name          String?
+  gender        UserGender?
+  phone         Int?           @unique
+  conversations Conversation[]
+
+  @@schema("public")
+}
+
+model Conversation {
+  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  owner     User       @relation(fields: [owner_id], references: [id])
+  owner_id  String     @db.Uuid
+  title     String?
+  messages  Message[]
+  exercises Exercise[]
+  create_at DateTime   @default(now())
+
+  @@index([owner_id])
+  @@schema("public")
+}
+
+model Message {
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content         String?
+  sender          MessageSender
+  status          MessageStatus
+  conversation    Conversation  @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  conversation_id String        @db.Uuid
+  create_at       DateTime      @default(now())
+
+  @@index([conversation_id])
+  @@schema("public")
+}
+
+model Exercise {
+  id              String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tag             ExerciseTag
+  difficulty      ExerciseDifficulty
+  structure       ExerciseStructure
+  validity_status ExerciseValidityStatus
+  conversation    Conversation           @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  conversation_id String                 @db.Uuid
+  create_at       DateTime               @default(now())
+
+  @@index([conversation_id])
+  @@schema("public")
+}
