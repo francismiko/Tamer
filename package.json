@@ -2,8 +2,8 @@
   "name": "tamer",
   "version": "1.0.0",
   "scripts": {
-    "start": "bun start:nest",
-    "start:nest": "cd nest && nest start",
+    "start": "cd nest && bun start",
+    "start:nest": "cd nest && bun start",
     "prepare": "husky install"
   },
   "husky": {
