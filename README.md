@@ -4,6 +4,7 @@
 
 - [x] 配置ESLint
 - [x] 部署Prisma Client
+- [x] 集成Swagger
 - [ ] 集成Supabase Auth
 - [ ] 集成langchain
 - [ ] LLM选型
