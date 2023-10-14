@@ -75,9 +75,10 @@ model User {
   email         String         @unique
   name          String?
   gender        UserGender?
-  phone         Int?           @unique
+  phone         String?        @unique
   conversations Conversation[]
 
+  @@map("user")
   @@schema("public")
 }
 
@@ -91,6 +92,7 @@ model Conversation {
   create_at DateTime   @default(now())
 
   @@index([owner_id])
+  @@map("conversation")
   @@schema("public")
 }
 
@@ -104,6 +106,7 @@ model Message {
   create_at       DateTime      @default(now())
 
   @@index([conversation_id])
+  @@map("message")
   @@schema("public")
 }
 
@@ -118,5 +121,6 @@ model Exercise {
   create_at       DateTime               @default(now())
 
   @@index([conversation_id])
+  @@map("exercise")
   @@schema("public")
 }
