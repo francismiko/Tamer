@@ -5,7 +5,7 @@
 | email         | String         | Unique      |
 | name          | String         |             |
 | gender        | Enum?          |             |
-| phone         | Int?           | @unique     |
+| phone         | String?        | @unique     |
 | conversations | Conversation[] |             |
 
 ------

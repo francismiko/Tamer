@@ -4,6 +4,7 @@
   "scripts": {
     "start": "cd nest && bun start",
     "start:nest": "cd nest && bun start",
+    "dev": "cd nest && bun start:dev",
     "prepare": "husky install"
   },
   "husky": {
