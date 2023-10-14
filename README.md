@@ -6,7 +6,7 @@
 - [x] 部署Prisma Client
 - [x] 集成Swagger
 - [x] 全局异常过滤器
-- [ ] 全局日志消息
+- [ ] 全局日志消息Prisma & Nest
 - [ ] 集成Supabase Auth
 - [ ] 集成langchain
 - [ ] LLM选型
