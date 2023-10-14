@@ -21,7 +21,7 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 8000);
 
   const logger = new Logger('Application');
-  logger.debug(`🚀 Nest service is running on: ${await app.getUrl()}`);
+  logger.log(`🚀 Nest service is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();

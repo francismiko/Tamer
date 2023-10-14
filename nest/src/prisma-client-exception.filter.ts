@@ -1,4 +1,4 @@
-import { ArgumentsHost, Catch, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, HttpStatus, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Prisma } from '@prisma/client';
 import { Response } from 'express';
@@ -10,12 +10,15 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const statusCode = this.getStatusCode(code);
+    const logger = new Logger(code);
 
     response.status(statusCode).json({
       type: name,
-      code: code,
+      code: statusCode,
       version: clientVersion,
     });
+
+    logger.error(exception);
   }
 
   private getStatusCode(code: string): HttpStatus {
