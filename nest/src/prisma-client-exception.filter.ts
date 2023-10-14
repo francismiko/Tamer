@@ -43,7 +43,7 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       P2020: HttpStatus.BAD_REQUEST,
       P2021: HttpStatus.NOT_FOUND,
       P2022: HttpStatus.NOT_FOUND,
-      P2023: HttpStatus.INTERNAL_SERVER_ERROR,
+      P2023: HttpStatus.NOT_FOUND,
       P2024: HttpStatus.REQUEST_TIMEOUT,
       P2025: HttpStatus.BAD_REQUEST,
       P2026: HttpStatus.NOT_IMPLEMENTED,
