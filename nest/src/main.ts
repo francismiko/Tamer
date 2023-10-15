@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { PrismaClientExceptionFilter } from './filter/prisma-client-exception.filter';
+import { logger } from './middleware/logger.middleware';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule);
@@ -17,13 +18,13 @@ const bootstrap = async (): Promise<void> => {
   SwaggerModule.setup('api', app, doc);
 
   app
+    .use(logger)
     .useGlobalFilters(new PrismaClientExceptionFilter())
     .useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(process.env.PORT || 8000);
 
-  const logger = new Logger('Running');
-  logger.log(`🚀 Nest service is running on: ${await app.getUrl()}`);
+  new Logger('Running').log(`🚀 Service is running on: ${await app.getUrl()}`);
 };
 
 bootstrap();

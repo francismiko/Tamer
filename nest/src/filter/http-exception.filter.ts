@@ -14,7 +14,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const statusCode = exception.getStatus();
-    const logger = new Logger('HttpException');
 
     response.status(statusCode).json({
       type: name,
@@ -22,6 +21,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       statusCode,
     });
 
-    logger.error(stack);
+    new Logger('HttpException').error(stack);
   }
 }

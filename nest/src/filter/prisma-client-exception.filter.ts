@@ -13,7 +13,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const statusCode = this.getStatusCode(code);
-    const logger = new Logger('PrismaClientKnownRequestError');
 
     response.status(statusCode).json({
       type: name,
@@ -22,7 +21,7 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       version: clientVersion,
     });
 
-    logger.error(`(${code})${stack}`);
+    new Logger('PrismaClientKnownRequestError').error(`(${code})${stack}`);
   }
 
   private getStatusCode(code: string): HttpStatus {
