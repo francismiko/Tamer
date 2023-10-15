@@ -5,5 +5,11 @@
     "source.organizeImports": true,
     "source.removeUnusedImports": true,
     "source.fixAll.eslint": true
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }

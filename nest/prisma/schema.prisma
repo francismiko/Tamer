@@ -68,18 +68,18 @@ enum ExerciseValidityStatus {
 }
 
 model User {
-  id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email         String         @unique
-  name          String?
-  gender        UserGender?
-  phone         String?        @unique
-  conversations Conversation[]
+  id     String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email  String      @unique
+  name   String?
+  gender UserGender?
+  phone  String?     @unique
+  chats  Chat[]
 
   @@map("user")
   @@schema("public")
 }
 
-model Conversation {
+model Chat {
   id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   owner     User       @relation(fields: [owner_id], references: [id])
   owner_id  String     @db.Uuid
@@ -94,15 +94,15 @@ model Conversation {
 }
 
 model Message {
-  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  content         String?
-  sender          MessageSender
-  status          MessageStatus
-  conversation    Conversation  @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
-  conversation_id String        @db.Uuid
-  create_at       DateTime      @default(now())
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content   String?
+  sender    MessageSender
+  status    MessageStatus
+  chat      Chat          @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+  chat_id   String        @db.Uuid
+  create_at DateTime      @default(now())
 
-  @@index([conversation_id])
+  @@index([chat_id])
   @@map("message")
   @@schema("public")
 }
@@ -113,11 +113,11 @@ model Exercise {
   difficulty      ExerciseDifficulty
   structure       ExerciseStructure
   validity_status ExerciseValidityStatus
-  conversation    Conversation           @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
-  conversation_id String                 @db.Uuid
+  chat            Chat                   @relation(fields: [chat_id], references: [id], onDelete: Cascade)
+  chat_id         String                 @db.Uuid
   create_at       DateTime               @default(now())
 
-  @@index([conversation_id])
+  @@index([chat_id])
   @@map("exercise")
   @@schema("public")
 }

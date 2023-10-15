@@ -1,16 +1,16 @@
 ### User
 
-| Field         | Type           | Constraints |
-| :------------ | -------------- | ----------- |
-| email         | String         | Unique      |
-| name          | String         |             |
-| gender        | Enum?          |             |
-| phone         | String?        | @unique     |
-| conversations | Conversation[] |             |
+| Field  | Type    | Constraints |
+| :----- | ------- | ----------- |
+| email  | String  | Unique      |
+| name   | String  |             |
+| gender | Enum?   |             |
+| phone  | String? | @unique     |
+| chats  | Chat[]  |             |
 
 ------
 
-### Conversation
+### Chat
 
 | Field     | Type       | Constraints |
 | :-------- | ---------- | ----------- |
@@ -24,26 +24,26 @@
 
 ### Message
 
-| Field        | Type         | Constraints |
-| :----------- | ------------ | ----------- |
-| content      | String?      |             |
-| sender       | Enum         |             |
-| status       | Enum         |             |
-| conversation | Conversation | Foreign     |
-| create_at    | DateTime     |             |
+| Field     | Type     | Constraints |
+| :-------- | -------- | ----------- |
+| content   | String?  |             |
+| sender    | Enum     |             |
+| status    | Enum     |             |
+| chat      | Chat     | Foreign     |
+| create_at | DateTime |             |
 
 ------
 
 ### Exercise
 
-| Field           | Type         | Constraints |
-| :-------------- | ------------ | ----------- |
-| tags            | Enum         |             |
-| difficulty      | Enum         |             |
-| structure       | Enum         |             |
-| validity_status | Enum         |             |
-| conversation    | Conversation | Foreign     |
-| create_at       | DateTime     |             |
+| Field           | Type     | Constraints |
+| :-------------- | -------- | ----------- |
+| tags            | Enum     |             |
+| difficulty      | Enum     |             |
+| structure       | Enum     |             |
+| validity_status | Enum     |             |
+| chat            | Chat     | Foreign     |
+| create_at       | DateTime |             |
 
 ------
 
