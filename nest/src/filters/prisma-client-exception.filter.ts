@@ -11,16 +11,15 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   ): void {
     const { code, meta, clientVersion, name, stack } = exception;
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const res = ctx.getResponse<Response>();
     const statusCode = this.getStatusCode(code);
 
-    response.status(statusCode).json({
+    res.status(statusCode).json({
       type: name,
       code: code,
       meta: meta,
       version: clientVersion,
     });
-
     new Logger('PrismaClientKnownRequestError').error(`(${code})${stack}`);
   }
 
