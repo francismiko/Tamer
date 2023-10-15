@@ -5,7 +5,10 @@ import { Response } from 'express';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaClientExceptionFilter extends BaseExceptionFilter {
-  catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+  catch(
+    exception: Prisma.PrismaClientKnownRequestError,
+    host: ArgumentsHost,
+  ): void {
     const { code, meta, clientVersion, name, stack } = exception;
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();

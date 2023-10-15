@@ -1,11 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { PrismaClientExceptionFilter } from './filter/prisma-client-exception.filter';
 import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
+import { PrismaClientExceptionFilter } from './filter/prisma-client-exception.filter';
 
-async function bootstrap() {
+const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule);
 
   const swaggerConf = new DocumentBuilder()
@@ -24,6 +24,6 @@ async function bootstrap() {
 
   const logger = new Logger('Running');
   logger.log(`🚀 Nest service is running on: ${await app.getUrl()}`);
-}
+};
 
 bootstrap();

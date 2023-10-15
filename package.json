@@ -2,6 +2,7 @@
   "name": "tamer",
   "version": "1.0.0",
   "scripts": {
+    "nest:dev": "cd ./nest && bun start:dev",
     "prepare": "husky install"
   },
   "husky": {
