@@ -8,7 +8,7 @@
 - [x] 全局异常过滤器
 - [x] 全局日志消息
 - [ ] 集成Supabase Auth
-- [ ] 集成langchain
+- [ ] 集成Langchain
 - [ ] LLM选型
 - [ ] Nest部署Docker
 - [ ] 集成Redis

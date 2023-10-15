@@ -6,19 +6,17 @@ import { PrismaService } from 'nestjs-prisma';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getUsers(): Promise<User[]> {
-    return this.prisma.user.findMany();
-  }
+  getUser(params: { id: string }): Promise<User | null> {
+    const { id } = params;
 
-  async getUser(id: string): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: { id },
     });
   }
 
-  async createUser(user: User): Promise<User> {
+  createUser(input: User): Promise<User> {
     return this.prisma.user.create({
-      data: user,
+      data: input,
     });
   }
 }
