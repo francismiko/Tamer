@@ -2,9 +2,8 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './filter/http-exception.filter';
-import { PrismaClientExceptionFilter } from './filter/prisma-client-exception.filter';
-import { logger } from './middleware/logger.middleware';
+import { HttpExceptionFilter, PrismaClientExceptionFilter } from './filters';
+import { logger } from './middlewares';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule);
@@ -19,8 +18,10 @@ const bootstrap = async (): Promise<void> => {
 
   app
     .use(logger)
-    .useGlobalFilters(new PrismaClientExceptionFilter())
-    .useGlobalFilters(new HttpExceptionFilter());
+    .useGlobalFilters(
+      new PrismaClientExceptionFilter(),
+      new HttpExceptionFilter(),
+    );
 
   await app.listen(process.env.PORT || 8000);
 
