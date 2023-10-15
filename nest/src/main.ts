@@ -1,9 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
 import { HttpExceptionFilter, PrismaClientExceptionFilter } from './filters';
 import { logger } from './middlewares';
+import { AppModule } from './modules/app.module';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule);
