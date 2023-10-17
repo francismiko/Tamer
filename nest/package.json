@@ -11,7 +11,7 @@
     "db:push": "prisma db push",
     "generate": "prisma generate",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "test": "jest",
