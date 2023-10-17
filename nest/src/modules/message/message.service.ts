@@ -14,11 +14,11 @@ export class MessageService {
     });
   }
 
-  async generateAIMessage(input: { message: string }): Promise<BaseMessage> {
+  generateAIMessage(input: { message: string }): Promise<BaseMessage> {
     const { message } = input;
     const model = new ChatOpenAI({ temperature: 1, timeout: 10000 });
 
-    const response = await model.call([new HumanMessage(message)]);
+    const response = model.call([new HumanMessage(message)]);
     return response;
   }
 }
