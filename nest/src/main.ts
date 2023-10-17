@@ -1,7 +1,11 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { HttpExceptionFilter, PrismaClientExceptionFilter } from './filters';
+import {
+  HttpExceptionFilter,
+  OpenAIExceptionFilter,
+  PrismaClientExceptionFilter,
+} from './filters';
 import { logger } from './middlewares';
 import { AppModule } from './modules/app.module';
 
@@ -19,6 +23,7 @@ const bootstrap = async (): Promise<void> => {
   app
     .use(logger)
     .useGlobalFilters(
+      new OpenAIExceptionFilter(),
       new PrismaClientExceptionFilter(),
       new HttpExceptionFilter(),
     );

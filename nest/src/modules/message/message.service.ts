@@ -1,6 +1,6 @@
+import { createChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
-import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { BaseMessage, HumanMessage } from 'langchain/schema';
 import { PrismaService } from 'nestjs-prisma';
 
@@ -16,9 +16,8 @@ export class MessageService {
 
   generateAIMessage(input: { message: string }): Promise<BaseMessage> {
     const { message } = input;
-    const model = new ChatOpenAI({ temperature: 1, timeout: 10000 });
+    const chatModel = createChatModel();
 
-    const response = model.call([new HumanMessage(message)]);
-    return response;
+    return chatModel.call([new HumanMessage(message)]);
   }
 }
