@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
+    "module": "commonjs",
     "strict": true,
     "declaration": true,
     "removeComments": true,
