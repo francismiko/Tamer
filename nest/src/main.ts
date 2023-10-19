@@ -10,7 +10,7 @@ import { logger } from './middlewares';
 import { AppModule } from './modules/app.module';
 
 const bootstrap = async (): Promise<void> => {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const swaggerConf = new DocumentBuilder()
     .setTitle('Title')
