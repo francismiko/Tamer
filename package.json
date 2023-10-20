@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "nest:dev": "cd ./nest && bun start:dev",
+    "react:dev": "cd ./react && bun dev",
     "prepare": "husky install"
   },
   "husky": {

@@ -9,7 +9,7 @@
 - [x] 全局日志消息
 - [ ] 集成Supabase Auth
 - [x] 集成Langchain
-- [ ] LLM选型
+- [x] LLM选型
 - [ ] Nest部署Docker
 - [ ] 集成Redis
 - [ ] 消息队列优化
