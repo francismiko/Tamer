@@ -1,5 +1,15 @@
 import React from 'react';
+import { Sidebar } from './Sidebar';
 
-export function Layout(): JSX.Element {
-  return <></>;
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export function Layout({ children }: LayoutProps): JSX.Element {
+  return (
+    <>
+      <Sidebar />
+      {children}
+    </>
+  );
 }

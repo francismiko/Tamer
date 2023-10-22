@@ -13,7 +13,8 @@
     "@clerk/clerk-react": "^4.26.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "tw-elements-react": "^1.0.0-alpha1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
