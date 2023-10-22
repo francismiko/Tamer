@@ -1,10 +1,21 @@
-import '@/style/index.css';
+import { ClerkProvider } from '@clerk/clerk-react';
+import '@style/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App.js';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Hero } from './pages/route';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Hero />,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+      <RouterProvider router={router} />
+    </ClerkProvider>
   </React.StrictMode>,
 );

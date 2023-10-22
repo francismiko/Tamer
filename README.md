@@ -7,12 +7,13 @@
 - [x] 集成Swagger
 - [x] 全局异常过滤器
 - [x] 全局日志消息
-- [ ] 集成Supabase Auth
+- [x] 集成Clerk
 - [x] 集成Langchain
 - [x] LLM选型
 - [ ] Nest部署Docker
 - [ ] 集成Redis
 - [ ] 消息队列优化
 - [x] 部署API文档
-- [ ] 前端技术栈选型
+- [x] 配置React Router
+- [ ] 全局Layout
 - [ ] 用户文件上传
