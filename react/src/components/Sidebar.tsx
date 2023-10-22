@@ -13,14 +13,14 @@ export function Sidebar(): JSX.Element {
         data-te-sidenav-accordion="true"
       >
         <a
-          className="mb-3 flex items-center justify-center border-b-2 border-solid border-gray-100 py-6 outline-none"
+          className="flex items-center justify-center py-6 mb-3 border-b-2 border-gray-100 border-solid outline-none"
           href="#!"
           data-te-ripple-init
           data-te-ripple-color="primary"
         >
           <img
             id="te-logo"
-            className="mr-2 w-6"
+            className="w-6 mr-2"
             src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.png"
             alt="TE Logo"
             draggable="false"
@@ -65,7 +65,7 @@ export function Sidebar(): JSX.Element {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                 >
                   <path
                     stroke-linecap="round"
@@ -89,7 +89,7 @@ export function Sidebar(): JSX.Element {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                 >
                   <path
                     stroke-linecap="round"
@@ -434,7 +434,7 @@ export function Sidebar(): JSX.Element {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="h-5 w-5"
+            className="w-5 h-5"
           >
             <path
               fill-rule="evenodd"
