@@ -21,7 +21,6 @@ export function App(): JSX.Element {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-    console.log(session);
 
     return () => subscription.unsubscribe();
   }, []);
