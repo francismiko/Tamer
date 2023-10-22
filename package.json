@@ -29,6 +29,7 @@
     "prettier": "^3.0.3"
   },
   "dependencies": {
+    "tailwindcss": "^3.3.3",
     "tw-elements": "^1.0.0"
   }
 }
