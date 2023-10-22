@@ -37,7 +37,7 @@ export function Hero(): JSX.Element {
             </div>
             {/* <!-- Hamburger button for mobile view --> */}
             <button
-              className="px-2 bg-transparent border-0 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+              className="block px-2 bg-transparent border-0 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
               type="button"
               data-te-collapse-init
               data-te-target="#navbarSupportedContent4"
@@ -68,7 +68,7 @@ export function Hero(): JSX.Element {
               data-te-collapse-item
             >
               <ul
-                className="flex flex-col pl-0 mr-auto list-style-none lg:mt-1 lg:flex-row"
+                className="flex flex-col pl-0 mr-auto list-style-none lg:mt-0 lg:flex-row"
                 data-te-navbar-nav-ref
               >
                 <li
