@@ -96,7 +96,7 @@ export function Hero(): JSX.Element {
                   type="button"
                   data-te-ripple-init
                   data-te-ripple-color="light"
-                  className="mr-5 inline-block rounded px-3 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg motion-reduce:transition-none bg-gray-800"
+                  className="mr-5 inline-block rounded-md px-3 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg motion-reduce:transition-none bg-gray-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -111,11 +111,13 @@ export function Hero(): JSX.Element {
             </div>
           </div>
         </nav>
-        <div className="px-6 py-24 text-center bg-neutral-50 dark:bg-neutral-900">
-          <h1 className="mt-2 mb-16 text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl">
+        <div className="h-screen px-6 py-24 text-center">
+          <h1 className="mt-2 mb-16 text-5xl font-bold tracking-tight text-cyan-300 md:text-6xl xl:text-7xl">
             Your own English
             <br />
-            <span className="text-primary">self-learning platform</span>
+            <span className="text-[#c0b269]">self-</span>
+            <span className="text-[#d5cb9b]">learning </span>
+            <span className="text-[#eae5cd]">platform</span>
           </h1>
         </div>
       </section>
