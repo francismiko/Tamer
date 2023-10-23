@@ -17,23 +17,18 @@ export function Hero(): JSX.Element {
     <>
       <section className="mb-40">
         <nav
-          className="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
+          className="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-700 lg:py-4"
           data-te-navbar-ref
         >
           <div className="flex flex-wrap items-center justify-between w-full px-3">
             <div>
-              <a
-                className="flex items-center mx-2 my-1 text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
-                href="#"
-              >
-                <img
-                  className="mr-2"
-                  src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
-                  style={{ height: '20px' }}
-                  alt="TE Logo"
-                  loading="lazy"
-                />
-              </a>
+              <img
+                className="mr-2"
+                src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
+                style={{ height: '20px' }}
+                alt="TE Logo"
+                loading="lazy"
+              />
             </div>
             {/* <!-- Hamburger button for mobile view --> */}
             <button
@@ -75,14 +70,14 @@ export function Hero(): JSX.Element {
                   className="pl-2 my-4 lg:my-0 lg:pl-2 lg:pr-1"
                   data-te-nav-item-ref
                 >
-                  <Link
-                    className="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                    aria-current="page"
-                    to="/dashboard"
-                    data-te-nav-link-ref
+                  <button
+                    type="button"
+                    data-te-ripple-init
+                    data-te-ripple-color="light"
+                    className="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-600 hover:text-primary-500 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700"
                   >
-                    Dashboard
-                  </Link>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </button>
                 </li>
               </ul>
               <div className="flex items-center">
