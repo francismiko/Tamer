@@ -2,25 +2,8 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import '@style/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Dashboard } from './pages/dashboard/route';
-import { Hero } from './pages/route';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Hero />,
-  },
-  {
-    path: 'dashboard',
-    element: (
-      <Layout>
-        <Dashboard />
-      </Layout>
-    ),
-  },
-]);
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
