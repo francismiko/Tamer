@@ -1,5 +1,7 @@
 # Tamer
 
+![](./react/public/Tamer-logo.png)
+
 ### TODOs:
 
 - [x] 配置ESLint
