@@ -6,7 +6,7 @@
   }
   html.dark {
     @apply text-neutral-50;
-    @apply bg-neutral-800;
+    @apply bg-slate-700;
   }
 }
 

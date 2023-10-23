@@ -78,7 +78,7 @@ export function Hero(): JSX.Element {
               </ul>
               <div className="flex items-center">
                 <SignedIn>
-                  <UserButton />
+                  <UserButton afterSignOutUrl="/" />
                 </SignedIn>
                 <SignedOut>
                   <Link

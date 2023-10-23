@@ -1,5 +1,5 @@
 import { ClerkProvider } from '@clerk/clerk-react';
-import '@style/index.css';
+import '@style/globals.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
