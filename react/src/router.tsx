@@ -2,9 +2,9 @@ import { SignIn, SignUp } from '@clerk/clerk-react';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import { Hero } from './pages/Hero';
 import { Chat } from './pages/dashboard/chat/route';
 import { Dashboard } from './pages/dashboard/route';
-import { Hero } from './pages/Hero';
 
 export const router = createBrowserRouter([
   {
@@ -12,28 +12,23 @@ export const router = createBrowserRouter([
     element: <Hero />,
   },
   {
-    path: 'signin',
+    path: '/signin',
     element: <SignIn />,
   },
   {
-    path: 'signout',
+    path: '/signout',
     element: <SignUp />,
   },
   {
-    path: 'dashboard',
-    element: (
-      <Layout>
-        <Dashboard />
-      </Layout>
-    ),
+    element: <Layout />,
     children: [
       {
-        path: 'chat',
-        element: (
-          <Layout>
-            <Chat />
-          </Layout>
-        ),
+        path: '/dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: '/dashboard/chat',
+        element: <Chat />,
       },
     ],
   },

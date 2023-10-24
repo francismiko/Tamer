@@ -1,15 +1,12 @@
 import { useAuth } from '@clerk/clerk-react';
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Sidenav, initTE } from 'tw-elements';
+import { Content } from './Content';
 import { Loading } from './Loading';
 import { Sidebar } from './Sidebar';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-export function Layout({ children }: LayoutProps): JSX.Element {
+export function Layout(): JSX.Element {
   const { isLoaded, isSignedIn } = useAuth();
   const navigate = useNavigate();
 
@@ -30,7 +27,9 @@ export function Layout({ children }: LayoutProps): JSX.Element {
   return (
     <>
       <Sidebar />
-      <main>{children}</main>
+      <Content>
+        <Outlet />
+      </Content>
     </>
   );
 }

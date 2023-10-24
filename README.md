@@ -13,10 +13,11 @@
 - [x] 集成Langchain
 - [x] LLM选型
 - [ ] Nest部署Docker
+- [ ] 集成Vector DB
 - [ ] 集成Redis
 - [ ] 消息队列优化
 - [x] 部署API文档
 - [x] 配置React Router
 - [x] 集成TW Element
-- [ ] 全局Layout
+- [x] 全局Layout
 - [ ] 用户文件上传
