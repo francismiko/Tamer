@@ -1,3 +1,4 @@
+import { useUser } from '@clerk/clerk-react';
 import React, { useState } from 'react';
 import {
   TEInput,
@@ -19,6 +20,7 @@ export function ChatModal({
   showModal,
   setShowModal,
 }: ChatModalProps): JSX.Element {
+  const { user } = useUser();
   const [title, setTitle] = useState('');
 
   const handleCreate = () => {
@@ -27,6 +29,7 @@ export function ChatModal({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title,
+        owner_id: user?.id,
       }),
     })
       .then((response) => {
