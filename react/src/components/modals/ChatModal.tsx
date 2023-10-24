@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  TEInput,
   TEModal,
   TEModalBody,
   TEModalContent,
@@ -18,15 +19,44 @@ export function ChatModal({
   showModal,
   setShowModal,
 }: ChatModalProps): JSX.Element {
+  const [title, setTitle] = useState('');
+
+  const handleCreate = () => {
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('成功创建：', data);
+      })
+      .catch((error) => {
+        console.error('创建失败：', error);
+      });
+    console.log(title);
+  };
+
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
-      <TEModalDialog>
-        <TEModalContent>
+      <TEModalDialog centered>
+        <TEModalContent className="!bg-gray-700">
           <TEModalHeader>
             {/* <!--Modal title--> */}
-            <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-              Modal title
-            </h5>
+            <TEInput
+              size="lg"
+              type="text"
+              label="Conversation Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
             {/* <!--Close button--> */}
             <button
               type="button"
@@ -66,8 +96,9 @@ export function ChatModal({
               <button
                 type="button"
                 className="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                onClick={handleCreate}
               >
-                Understood
+                Create
               </button>
             </TERipple>
           </TEModalFooter>
