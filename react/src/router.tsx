@@ -3,7 +3,6 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Hero } from './pages/Hero';
-import { Chat } from './pages/dashboard/chat/route';
 import { Dashboard } from './pages/dashboard/route';
 
 export const router = createBrowserRouter([
@@ -25,10 +24,6 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />,
-      },
-      {
-        path: '/dashboard/chat',
-        element: <Chat />,
       },
     ],
   },
