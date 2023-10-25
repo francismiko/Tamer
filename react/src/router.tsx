@@ -12,11 +12,19 @@ export const router = createBrowserRouter([
   },
   {
     path: '/signin',
-    element: <SignIn />,
+    element: (
+      <div className="flex items-center justify-center h-screen">
+        <SignIn />
+      </div>
+    ),
   },
   {
-    path: '/signout',
-    element: <SignUp />,
+    path: '/signup',
+    element: (
+      <div className="flex items-center justify-center h-screen">
+        <SignUp />
+      </div>
+    ),
   },
   {
     element: <Layout />,
