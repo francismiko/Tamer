@@ -9,87 +9,72 @@ datasource db {
   schemas  = ["public"]
 }
 
-enum UserGender {
-  male
-  female
-  other
+enum LLM {
+  ChatGPT
 
   @@schema("public")
 }
 
 enum MessageSender {
-  owner
-  collaborator
+  Owner
+  Collaborator
 
   @@schema("public")
 }
 
 enum MessageStatus {
-  pending
-  reject
-  done
+  Pending
+  Reject
+  Done
 
   @@schema("public")
 }
 
 enum ExerciseTag {
-  grammar
-  vocabulary
-  listening
-  speaking
-  writing
-  reading
+  Grammar
+  Vocabulary
+  Listening
+  Speaking
+  Writing
+  Reading
 
   @@schema("public")
 }
 
 enum ExerciseDifficulty {
-  easy
-  medium
-  hard
+  Easy
+  Medium
+  Hard
 
   @@schema("public")
 }
 
 enum ExerciseStructure {
-  sentence
-  paragraph
-  article
+  Sentence
+  Paragraph
+  Article
 
   @@schema("public")
 }
 
 enum ExerciseValidityStatus {
-  uncertain
-  valid
-  invalid
+  Uncertain
+  Valid
+  Invalid
 
-  @@schema("public")
-}
-
-model User {
-  id     String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email  String      @unique
-  name   String?
-  gender UserGender?
-  phone  String?     @unique
-  chats  Chat[]
-
-  @@map("user")
   @@schema("public")
 }
 
 model Chat {
-  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  owner     User       @relation(fields: [owner_id], references: [id])
-  owner_id  String     @db.Uuid
-  title     String?
-  messages  Message[]
-  exercises Exercise[]
-  create_at DateTime   @default(now())
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  owner      String
+  title      String?
+  chat_model LLM        @default(ChatGPT)
+  messages   Message[]
+  exercises  Exercise[]
+  create_at  DateTime   @default(now())
 
-  @@index([owner_id])
-  @@map("conversation")
+  @@map("chat")
   @@schema("public")
 }
 
