@@ -1,5 +1,5 @@
 import { useUser } from '@clerk/clerk-react';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   TEInput,
   TEModal,
@@ -23,7 +23,7 @@ export function ChatModal({
   const { user } = useUser();
   const [title, setTitle] = useState('');
 
-  const handleCreate = () => {
+  const handleCreate = useCallback(() => {
     fetch('', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -44,8 +44,7 @@ export function ChatModal({
       .catch((error) => {
         console.error('创建失败：', error);
       });
-    console.log(title);
-  };
+  }, [title, user]);
 
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
