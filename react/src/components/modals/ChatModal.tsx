@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import React, { useCallback, useState } from 'react';
 import {
   TEInput,
@@ -14,13 +13,14 @@ import {
 interface ChatModalProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  owner: string | undefined;
 }
 
 export function ChatModal({
   showModal,
   setShowModal,
+  owner,
 }: ChatModalProps): JSX.Element {
-  const { user } = useUser();
   const [title, setTitle] = useState('');
 
   const handleCreate = useCallback(() => {
@@ -29,7 +29,7 @@ export function ChatModal({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: title || 'new Conversation',
-        owner: user?.id,
+        owner,
       }),
     })
       .then((response) => {
@@ -44,7 +44,7 @@ export function ChatModal({
       .catch((error) => {
         console.error('创建失败：', error);
       });
-  }, [title, user]);
+  }, [title, owner]);
 
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>

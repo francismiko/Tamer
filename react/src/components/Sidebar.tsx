@@ -1,10 +1,13 @@
-import { UserButton } from '@clerk/clerk-react';
+import { UserButton, useUser } from '@clerk/clerk-react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ripple, Sidenav, initTE } from 'tw-elements';
+import { useChat } from '../hooks/useChat';
 import { ChatModal } from './modals/ChatModal';
 
 export function Sidebar(): JSX.Element {
+  const { user } = useUser();
+  const { chats } = useChat(user?.id);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -129,14 +132,16 @@ export function Sidebar(): JSX.Element {
               className="!visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block "
               data-te-sidenav-collapse-ref
             >
-              <li className="relative">
-                <a
-                  className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
-                  data-te-sidenav-link-ref
-                >
-                  Link 2
-                </a>
-              </li>
+              {chats?.map(({ title }) => (
+                <li className="relative">
+                  <a
+                    className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
+                    data-te-sidenav-link-ref
+                  >
+                    {title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </li>
         </ul>
@@ -144,7 +149,11 @@ export function Sidebar(): JSX.Element {
           <UserButton showName={true} />
         </div>
       </nav>
-      <ChatModal showModal={showModal} setShowModal={setShowModal} />
+      <ChatModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        owner={user?.id}
+      />
     </>
   );
 }

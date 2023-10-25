@@ -6,6 +6,14 @@ import { PrismaService } from 'nestjs-prisma';
 export class ChatService {
   constructor(private prisma: PrismaService) {}
 
+  getChatsByOwner(owner: string): Promise<Chat[]> {
+    return this.prisma.chat.findMany({
+      where: {
+        owner,
+      },
+    });
+  }
+
   createChat(input: Chat): Promise<Chat> {
     return this.prisma.chat.create({
       data: input,
