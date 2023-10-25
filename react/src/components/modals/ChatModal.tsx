@@ -50,7 +50,7 @@ export function ChatModal({
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
       <TEModalDialog centered>
         <TEModalContent className="!bg-gray-700">
-          <TEModalHeader>
+          <TEModalHeader className="!border-b-0">
             {/* <!--Modal title--> */}
             <TEInput
               size="lg"
@@ -82,9 +82,28 @@ export function ChatModal({
               </svg>
             </button>
           </TEModalHeader>
+          <hr className="h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
           {/* <!--Modal body--> */}
-          <TEModalBody>...</TEModalBody>
-          <TEModalFooter>
+          <TEModalBody className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {modelCards.map(({ iconUrl, model, parameters, context }) => (
+              <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-neutral-700 md:max-w-xl md:flex-row md:h-16">
+                <img
+                  className="w-full aspect-square object-cover md:h-16 md:w-16 md:rounded-none"
+                  src={iconUrl}
+                />
+                <div className="flex flex-col justify-start py-1 px-2">
+                  <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
+                    {model}
+                  </p>
+                  <p className="text-xs font-light text-neutral-600 dark:text-neutral-300">
+                    <strong>{parameters}</strong> parameters, up to{' '}
+                    <strong>{context}</strong> token context.
+                  </p>
+                </div>
+              </div>
+            ))}
+          </TEModalBody>
+          <TEModalFooter className="!border-t-0">
             <TERipple rippleColor="light">
               <button
                 type="button"
@@ -109,3 +128,25 @@ export function ChatModal({
     </TEModal>
   );
 }
+
+type ModelCard = {
+  iconUrl: string;
+  model: string;
+  parameters: string;
+  context: string;
+};
+
+const modelCards: ModelCard[] = [
+  {
+    iconUrl: '/chatgpt.svg',
+    model: 'GPT-3.5-Turbo',
+    parameters: '175b',
+    context: '4k',
+  },
+  {
+    iconUrl: '/chatgpt.svg',
+    model: 'GPT-3.5-Turbo',
+    parameters: '175b',
+    context: '4k',
+  },
+];
