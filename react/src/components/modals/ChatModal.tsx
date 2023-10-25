@@ -24,12 +24,12 @@ export function ChatModal({
   const [title, setTitle] = useState('');
 
   const handleCreate = useCallback(() => {
-    fetch('', {
+    fetch('http://[::1]:8000/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title,
-        owner_id: user?.id,
+        title: title || 'new Conversation',
+        owner: user?.id,
       }),
     })
       .then((response) => {

@@ -68,7 +68,7 @@ enum ExerciseValidityStatus {
 model Chat {
   id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   owner      String
-  title      String?
+  title      String     @default("Untitled")
   chat_model LLM        @default(ChatGPT)
   messages   Message[]
   exercises  Exercise[]
