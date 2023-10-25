@@ -84,9 +84,9 @@ export function ChatModal({
           </TEModalHeader>
           <hr className="h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
           {/* <!--Modal body--> */}
-          <TEModalBody className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TEModalBody className="grid px-6 grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
             {modelCards.map(({ iconUrl, model, parameters, context }) => (
-              <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-neutral-700 md:max-w-xl md:flex-row md:h-16">
+              <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16">
                 <img
                   className="w-full aspect-square object-cover md:h-16 md:w-16 md:rounded-xl"
                   src={iconUrl}
