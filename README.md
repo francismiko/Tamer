@@ -1,6 +1,6 @@
 # Tamer
 
-![](./react/public/Tamer-logo-blur.png)
+![](./react/public/Tamer-logo.png)
 
 ### TODOs:
 

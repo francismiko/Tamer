@@ -88,7 +88,7 @@ export function ChatModal({
             {modelCards.map(({ iconUrl, model, parameters, context }) => (
               <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-neutral-700 md:max-w-xl md:flex-row md:h-16">
                 <img
-                  className="w-full aspect-square object-cover md:h-16 md:w-16 md:rounded-none"
+                  className="w-full aspect-square object-cover md:h-16 md:w-16 md:rounded-xl"
                   src={iconUrl}
                 />
                 <div className="flex flex-col justify-start py-1 px-2">
@@ -103,6 +103,7 @@ export function ChatModal({
               </div>
             ))}
           </TEModalBody>
+          <hr className="h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
           <TEModalFooter className="!border-t-0">
             <TERipple rippleColor="light">
               <button
@@ -144,9 +145,27 @@ const modelCards: ModelCard[] = [
     context: '4k',
   },
   {
-    iconUrl: '/chatgpt.svg',
-    model: 'GPT-3.5-Turbo',
-    parameters: '175b',
+    iconUrl: '/gpt4.svg',
+    model: 'GPT-4',
+    parameters: '1760b',
+    context: '8k',
+  },
+  {
+    iconUrl: '/meta.svg',
+    model: 'Llama-2',
+    parameters: '13b',
     context: '4k',
+  },
+  {
+    iconUrl: '/claude.svg',
+    model: 'Claude-2',
+    parameters: '137b',
+    context: '100k',
+  },
+  {
+    iconUrl: '/chatglm.svg',
+    model: 'ChatGLM',
+    parameters: '6b',
+    context: '2k',
   },
 ];
