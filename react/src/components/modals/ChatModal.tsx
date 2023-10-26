@@ -62,7 +62,7 @@ export function ChatModal({
             {/* <!--Close button--> */}
             <button
               type="button"
-              className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              className="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
               onClick={() => setShowModal(false)}
               aria-label="Close"
             >
@@ -72,7 +72,7 @@ export function ChatModal({
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="h-6 w-6"
+                className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
@@ -82,16 +82,16 @@ export function ChatModal({
               </svg>
             </button>
           </TEModalHeader>
-          <hr className="h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+          <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
           {/* <!--Modal body--> */}
-          <TEModalBody className="grid px-6 grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+          <TEModalBody className="grid grid-cols-1 px-6 md:grid-cols-2 gap-x-6 gap-y-4">
             {modelCards.map(({ iconUrl, model, parameters, context }) => (
-              <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16">
+              <div className="flex flex-col rounded-xl bg-white drop-shadow-lg dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer">
                 <img
-                  className="w-full aspect-square object-cover md:h-16 md:w-16 md:rounded-xl"
+                  className="object-cover w-full aspect-square md:h-16 md:w-16 md:rounded-xl"
                   src={iconUrl}
                 />
-                <div className="flex flex-col justify-start py-1 px-2">
+                <div className="flex flex-col justify-start px-2 py-1">
                   <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
                     {model}
                   </p>
@@ -103,7 +103,7 @@ export function ChatModal({
               </div>
             ))}
           </TEModalBody>
-          <hr className="h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:opacity-100" />
+          <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
           <TEModalFooter className="!border-t-0">
             <TERipple rippleColor="light">
               <button
