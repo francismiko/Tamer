@@ -9,12 +9,6 @@ datasource db {
   schemas  = ["public"]
 }
 
-enum LLM {
-  ChatGPT
-
-  @@schema("public")
-}
-
 enum MessageSender {
   Owner
   Collaborator
@@ -69,7 +63,7 @@ model Chat {
   id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   owner      String
   title      String     @default("Untitled")
-  chat_model LLM        @default(ChatGPT)
+  chat_model String     @default("GPT-3.5-Turbo")
   messages   Message[]
   exercises  Exercise[]
   create_at  DateTime   @default(now())

@@ -1,9 +1,8 @@
+import { Layout } from '@/components/Layout';
+import { Hero } from '@/pages/Hero';
+import { Dashboard } from '@/pages/dashboard/route';
 import { SignIn, SignUp } from '@clerk/clerk-react';
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Hero } from './pages/Hero';
-import { Dashboard } from './pages/dashboard/route';
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +30,10 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: '/dashboard/conversation/:id',
         element: <Dashboard />,
       },
     ],

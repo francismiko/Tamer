@@ -1,5 +1,5 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Collapse, Ripple, initTE } from 'tw-elements';
 

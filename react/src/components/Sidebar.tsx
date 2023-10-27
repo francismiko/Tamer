@@ -1,9 +1,9 @@
+import { ChatModal } from '@/components/modals/ChatModal';
+import { useChat } from '@/hooks/useChat';
 import { UserButton, useUser } from '@clerk/clerk-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ripple, Sidenav, initTE } from 'tw-elements';
-import { useChat } from '../hooks/useChat';
-import { ChatModal } from './modals/ChatModal';
 
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
@@ -79,7 +79,7 @@ export function Sidebar(): JSX.Element {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                 >
                   <path
                     strokeLinecap="round"
@@ -118,7 +118,7 @@ export function Sidebar(): JSX.Element {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                 >
                   <path
                     fillRule="evenodd"
@@ -132,14 +132,15 @@ export function Sidebar(): JSX.Element {
               className="!visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block "
               data-te-sidenav-collapse-ref
             >
-              {chats?.map(({ title }) => (
-                <li className="relative">
-                  <a
+              {chats?.map(({ id, title }, index) => (
+                <li key={index} className="relative">
+                  <Link
+                    to={`/dashboard/conversation/${id}`}
                     className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
                     data-te-sidenav-link-ref
                   >
                     {title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
