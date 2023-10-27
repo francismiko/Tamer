@@ -33,6 +33,10 @@ export const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard />,
       },
+      {
+        path: '/dashboard/conversation/:id',
+        element: <Dashboard />,
+      },
     ],
   },
 ]);

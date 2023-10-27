@@ -18,7 +18,11 @@ export function Layout(): JSX.Element {
   }, [isSignedIn]);
 
   if (!isLoaded) {
-    return <Loading />;
+    return (
+      <div className="h-screen ">
+        <Loading />
+      </div>
+    );
   }
 
   return (

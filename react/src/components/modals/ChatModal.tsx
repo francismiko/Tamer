@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   TEInput,
   TEModal,
@@ -9,6 +10,7 @@ import {
   TEModalHeader,
   TERipple,
 } from 'tw-elements-react';
+import { chatData } from '../../types/fetchData';
 import { Loading } from '../Loading';
 
 interface ChatModalProps {
@@ -22,6 +24,7 @@ export function ChatModal({
   setShowModal,
   owner,
 }: ChatModalProps): JSX.Element {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
   const [isCreateLoading, setIsCreateLoading] = useState(false);
@@ -37,20 +40,19 @@ export function ChatModal({
         owner,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
       })
-      .then((data) => {
-        console.log('成功创建：', data);
+      .then(({ id }: chatData) => {
+        navigate(`/dashboard/conversation/${id}`);
       })
       .catch((error) => {
-        console.error('创建失败：', error);
+        console.error(error);
       })
       .finally(() => {
         setIsCreateLoading(false);
+        setShowModal(false);
       });
   }, [title, chatModel, owner]);
 
