@@ -22,9 +22,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@style/*": ["./src/style/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["../src"],
+  "include": ["./src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

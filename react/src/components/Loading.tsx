@@ -1,9 +1,3 @@
-import React from 'react';
-
-interface LoadingProps {
-  size?: string;
-}
-
 export function Loading({ size = 'xl' }: LoadingProps): JSX.Element {
   const sizeStyles: { [key: string]: string } = {
     sm: 'h-3 w-3',

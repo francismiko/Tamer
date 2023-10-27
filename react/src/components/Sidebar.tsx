@@ -1,9 +1,9 @@
+import { ChatModal } from '@/components/modals/ChatModal';
+import { useChat } from '@/hooks/useChat';
 import { UserButton, useUser } from '@clerk/clerk-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ripple, Sidenav, initTE } from 'tw-elements';
-import { useChat } from '../hooks/useChat';
-import { ChatModal } from './modals/ChatModal';
 
 export function Sidebar(): JSX.Element {
   const { user } = useUser();

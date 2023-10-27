@@ -1,10 +1,9 @@
+import { Loading } from '@/components/Loading';
+import { Sidebar } from '@/components/Sidebar';
 import { useAuth } from '@clerk/clerk-react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { SWRConfig } from 'swr';
-import { Content } from './Content';
-import { Loading } from './Loading';
-import { Sidebar } from './Sidebar';
 
 export function Layout(): JSX.Element {
   const { isLoaded, isSignedIn } = useAuth();
@@ -19,9 +18,9 @@ export function Layout(): JSX.Element {
 
   if (!isLoaded) {
     return (
-      <div className="h-screen ">
+      <main className="h-screen ">
         <Loading />
-      </div>
+      </main>
     );
   }
 
@@ -32,9 +31,9 @@ export function Layout(): JSX.Element {
       }}
     >
       <Sidebar />
-      <Content>
+      <main className="px-8 !pl-64 h-screen overflow-auto">
         <Outlet />
-      </Content>
+      </main>
     </SWRConfig>
   );
 }

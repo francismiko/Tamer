@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { Loading } from '@/components/Loading';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   TEInput,
@@ -10,14 +11,6 @@ import {
   TEModalHeader,
   TERipple,
 } from 'tw-elements-react';
-import { chatData } from '../../types/fetchData';
-import { Loading } from '../Loading';
-
-interface ChatModalProps {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  owner: string | undefined;
-}
 
 export function ChatModal({
   showModal,
@@ -44,7 +37,7 @@ export function ChatModal({
         if (!res.ok) throw new Error();
         return res.json();
       })
-      .then(({ id }: chatData) => {
+      .then(({ id }: Chat) => {
         navigate(`/dashboard/conversation/${id}`);
       })
       .catch((error) => {
@@ -139,13 +132,6 @@ export function ChatModal({
     </TEModal>
   );
 }
-
-type ModelCard = {
-  iconUrl: string;
-  model: string;
-  parameters: string;
-  context: string;
-};
 
 const modelCards: ModelCard[] = [
   {
