@@ -19,8 +19,8 @@
     ]
   },
   "workspaces": [
-    "react",
-    "nest"
+    "react/*",
+    "nest/*"
   ],
   "devDependencies": {
     "@eslint/create-config": "^0.4.6",
