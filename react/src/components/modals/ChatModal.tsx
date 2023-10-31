@@ -1,4 +1,5 @@
 import { Loading } from '@/components/Loading';
+import { useCreateChat } from '@/hooks/useCreateChat';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -17,36 +18,15 @@ export function ChatModal({
   setShowModal,
   owner,
 }: ChatModalProps): JSX.Element {
+  const { createChat, isMutating } = useCreateChat();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
-  const [isCreateLoading, setIsCreateLoading] = useState(false);
 
-  const handleCreate = useCallback(() => {
-    setIsCreateLoading(true);
-    fetch('http://[::1]:8000/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: title || 'new Conversation',
-        chat_model: chatModel,
-        owner,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then(({ id }: Chat) => {
-        navigate(`/dashboard/conversation/${id}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsCreateLoading(false);
-        setShowModal(false);
-      });
+  const handleCreate = useCallback(async () => {
+    const { id } = await createChat({ title, chatModel, owner });
+    navigate(`/dashboard/conversation/${id}`);
+    setShowModal(false);
   }, [title, chatModel, owner]);
 
   return (
@@ -123,7 +103,7 @@ export function ChatModal({
                 className="h-9 w-24 items-center inline-block rounded bg-primary text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 onClick={handleCreate}
               >
-                {isCreateLoading ? <Loading size="md" /> : 'Create'}
+                {isMutating ? <Loading size="md" /> : 'Create'}
               </button>
             </TERipple>
           </TEModalFooter>
