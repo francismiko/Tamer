@@ -1,6 +1,7 @@
 {
   "name": "tamer",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "nest:dev": "cd ./nest && bun start:dev",
     "react:dev": "cd ./react && bun dev",
@@ -17,6 +18,10 @@
       "npx eslint --fix"
     ]
   },
+  "workspaces": [
+    "react",
+    "nest"
+  ],
   "devDependencies": {
     "@eslint/create-config": "^0.4.6",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
