@@ -1,5 +1,5 @@
 import { Loading } from '@/components/Loading';
-import { useCreateChat } from '@/hooks/useCreateChat';
+import { useCreateChat } from '@/hooks/useSWRMutation/useCreateChat';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -19,9 +19,9 @@ export function ChatModal({
   owner,
 }: ChatModalProps): JSX.Element {
   const { createChat, isMutating } = useCreateChat();
-  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
+  const navigate = useNavigate();
 
   const handleCreate = useCallback(async () => {
     const { id } = await createChat({ title, chatModel, owner });

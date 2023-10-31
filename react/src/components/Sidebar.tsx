@@ -1,5 +1,5 @@
 import { ChatModal } from '@/components/modals/ChatModal';
-import { useChat } from '@/hooks/useChat';
+import { useChat } from '@/hooks/useSWR/useChat';
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

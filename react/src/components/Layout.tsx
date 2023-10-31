@@ -8,7 +8,6 @@ import { SWRConfig } from 'swr';
 export function Layout(): JSX.Element {
   const { isLoaded, isSignedIn } = useAuth();
   const navigate = useNavigate();
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -27,7 +26,10 @@ export function Layout(): JSX.Element {
   return (
     <SWRConfig
       value={{
-        fetcher: (url) => fetch(backendUrl + url).then((res) => res.json()),
+        fetcher: (url) =>
+          fetch(import.meta.env.VITE_BACKEND_URL + url).then((res) =>
+            res.json(),
+          ),
       }}
     >
       <Sidebar />
