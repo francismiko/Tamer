@@ -1,13 +1,13 @@
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {
   HttpExceptionFilter,
   OpenAIExceptionFilter,
   PrismaClientExceptionFilter,
-} from './filters';
-import { logger } from './middlewares';
-import { AppModule } from './modules/app.module';
+} from '@/filters';
+import { logger } from '@/middlewares';
+import { AppModule } from '@/modules/app.module';
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.create(AppModule, { cors: true });

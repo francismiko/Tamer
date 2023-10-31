@@ -1,6 +1,6 @@
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 
-export const createChatModel = (): ChatOpenAI => {
+export const createGPTChatModel = (): ChatOpenAI => {
   return new ChatOpenAI(
     {
       openAIApiKey: process.env.OPENAI_API_KEY,

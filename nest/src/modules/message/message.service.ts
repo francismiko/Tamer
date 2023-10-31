@@ -1,4 +1,4 @@
-import { createChatModel } from '@lib/chatModel';
+import { createGPTChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
 import { BaseMessage, HumanMessage } from 'langchain/schema';
@@ -16,7 +16,7 @@ export class MessageService {
 
   generateAIMessage(input: { message: string }): Promise<BaseMessage> {
     const { message } = input;
-    const chatModel = createChatModel();
+    const chatModel = createGPTChatModel();
 
     return chatModel.call([new HumanMessage(message)]);
   }
