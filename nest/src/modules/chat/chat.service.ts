@@ -11,6 +11,9 @@ export class ChatService {
       where: {
         owner,
       },
+      orderBy: {
+        create_at: 'desc',
+      },
     });
   }
 
