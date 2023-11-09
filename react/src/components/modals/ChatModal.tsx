@@ -70,7 +70,7 @@ export function ChatModal({
           <TEModalBody className="grid grid-cols-1 px-6 md:grid-cols-2 gap-x-6 gap-y-4">
             {useMemo(
               () => (
-                <div>
+                <>
                   {modelCards.map(
                     ({ iconUrl, model, parameters, context }, index) => (
                       <div
@@ -97,9 +97,9 @@ export function ChatModal({
                       </div>
                     ),
                   )}
-                </div>
+                </>
               ),
-              [modelCards],
+              [chatModel],
             )}
           </TEModalBody>
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
