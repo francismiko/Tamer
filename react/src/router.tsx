@@ -3,6 +3,7 @@ import { Hero } from '@/pages/Hero';
 import { Dashboard } from '@/pages/dashboard/route';
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
+import { Conversation } from './pages/dashboard/conversation/route';
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard/conversation/:id',
-        element: <Dashboard />,
+        element: <Conversation />,
       },
     ],
   },
