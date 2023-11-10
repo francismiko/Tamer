@@ -33,7 +33,7 @@ export function Layout(): JSX.Element {
       }}
     >
       <Sidebar />
-      <main className="px-8 !pl-64 h-screen overflow-auto">
+      <main className="!pl-60 h-screen overflow-auto">
         <Outlet />
       </main>
     </SWRConfig>
