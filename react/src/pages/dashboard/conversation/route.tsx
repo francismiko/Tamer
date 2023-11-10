@@ -17,7 +17,7 @@ export function Conversation(): JSX.Element {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-1 overflow-y-auto px-44">
+      <div className="flex-1 overflow-y-auto w-3/5 mx-auto">
         {chatData.map((chat, index) => (
           <div key={index} className="mb-4">
             <div className="font-bold">
