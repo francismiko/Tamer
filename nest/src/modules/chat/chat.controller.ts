@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { Chat } from '@prisma/client';
 import { ChatService } from './chat.service';
 
@@ -6,8 +6,8 @@ import { ChatService } from './chat.service';
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @Get()
-  getChat(@Query('id') id: string): Promise<Chat | null> {
+  @Get(':id')
+  getChat(@Param('id') id: string): Promise<Chat | null> {
     return this.chatService.getChat(id);
   }
 

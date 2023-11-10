@@ -120,6 +120,7 @@ export function ChatModal({
   );
 }
 
+// TODO: use dynamic card
 const modelCards: ModelCard[] = [
   {
     iconUrl: '/chatgpt.svg',

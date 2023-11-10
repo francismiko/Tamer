@@ -1,5 +1,5 @@
 import { ChatModal } from '@/components/modals/ChatModal';
-import { useChat } from '@/hooks/useSWR/useChat';
+import { useChats } from '@/hooks/useSWR/useChats';
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Ripple, Sidenav, initTE } from 'tw-elements';
 
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
-  const { chats } = useChat(user?.id);
+  const { chats } = useChats(user?.id);
   const [showModal, setShowModal] = useState(false);
   const [activeChat, setActiveChat] = useState<number | null>(null);
 

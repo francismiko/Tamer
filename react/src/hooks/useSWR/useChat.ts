@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 
-export function useChat(owner: string | undefined): {
-  chats: Chat[] | undefined;
+export function useChat(id: string | undefined): {
+  chat: Chat | undefined;
   isLoading: boolean;
   isError: boolean;
 } {
-  const { data, error, isLoading } = useSWR<Chat[]>(`/chat?owner=${owner}`);
+  const { data, error, isLoading } = useSWR<Chat>(`/chat/${id}`);
 
   return {
-    chats: data,
+    chat: data,
     isLoading,
     isError: error,
   };

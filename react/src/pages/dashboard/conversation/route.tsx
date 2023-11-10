@@ -1,12 +1,27 @@
+import { useChat } from '@/hooks/useSWR/useChat';
 import { useRef } from 'react';
+import { useParams } from 'react-router-dom';
+
+const chatData = [
+  { sender: 'user', message: '你好！' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+];
 
 export function Conversation(): JSX.Element {
+  const { id } = useParams();
+  const { chat } = useChat(id);
   const inputRef = useRef<HTMLInputElement>(null);
-  // 静态聊天数据
-  const chatData = [
-    { sender: 'user', message: '你好！' },
-    { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  ];
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,7 +31,12 @@ export function Conversation(): JSX.Element {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen relative">
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-2 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
+        <div className="text-center">
+          <p className="font-bold">{chat?.chat_model}</p>
+        </div>
+      </div>
       <div className="flex-1 overflow-y-auto">
         {chatData.map((chat, index) => (
           <div
