@@ -63,7 +63,6 @@ export function Conversation(): JSX.Element {
         ),
         [messages],
       )}
-
       <form
         onSubmit={handleSubmit}
         className="p-6 border-t border-slate-400 flex"
