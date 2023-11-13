@@ -1,5 +1,5 @@
 import { useChat } from '@/hooks/useSWR/useChat';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 const messages: Message[] = [
@@ -38,24 +38,32 @@ export function Conversation(): JSX.Element {
           <p className="font-bold">{chat?.chat_model}</p>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
-        {messages.map(
-          (msg) =>
-            msg.status === 'Done' && (
-              <div
-                key={msg.id}
-                className={`py-4 ${msg.sender === 'User' && 'bg-slate-600'}`}
-              >
-                <div className="w-3/5 mx-auto">
-                  <div className="font-bold">
-                    {msg.sender === 'User' ? 'user' : 'bot'}
+      {useMemo(
+        () => (
+          <div className="flex-1 overflow-y-auto">
+            {messages.map(
+              (msg) =>
+                msg.status === 'Done' && (
+                  <div
+                    key={msg.id}
+                    className={`py-4 ${
+                      msg.sender === 'User' && 'bg-slate-600'
+                    }`}
+                  >
+                    <div className="w-3/5 mx-auto">
+                      <div className="font-bold">
+                        {msg.sender === 'User' ? 'user' : 'bot'}
+                      </div>
+                      <p className="antialiased">{msg.content}</p>
+                    </div>
                   </div>
-                  <p className="antialiased">{msg.content}</p>
-                </div>
-              </div>
-            ),
-        )}
-      </div>
+                ),
+            )}
+          </div>
+        ),
+        [messages],
+      )}
+
       <form
         onSubmit={handleSubmit}
         className="p-6 border-t border-slate-400 flex"
