@@ -2,20 +2,21 @@ import { useChat } from '@/hooks/useSWR/useChat';
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
-const chatData = [
-  { sender: 'user', message: '你好！' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
-  { sender: 'bot', message: '你好，有什么我可以帮助你的吗？' },
+const messages: Message[] = [
+  {
+    id: '111',
+    sender: 'User',
+    content: '你好！',
+    status: 'Done',
+    create_at: new Date('2021-08-01T00:00:00Z'),
+  },
+  {
+    id: '112',
+    sender: 'Bot',
+    content: '你好，有什么我可以帮助你的吗？',
+    status: 'Done',
+    create_at: new Date('2021-08-01T00:00:00Z'),
+  },
 ];
 
 export function Conversation(): JSX.Element {
@@ -38,19 +39,22 @@ export function Conversation(): JSX.Element {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto">
-        {chatData.map((chat, index) => (
-          <div
-            key={index}
-            className={`py-4 ${chat.sender === 'user' && 'bg-slate-600'}`}
-          >
-            <div className="w-3/5 mx-auto">
-              <div className="font-bold">
-                {chat.sender === 'user' ? 'user' : 'bot'}
+        {messages.map(
+          (msg) =>
+            msg.status === 'Done' && (
+              <div
+                key={msg.id}
+                className={`py-4 ${msg.sender === 'User' && 'bg-slate-600'}`}
+              >
+                <div className="w-3/5 mx-auto">
+                  <div className="font-bold">
+                    {msg.sender === 'User' ? 'user' : 'bot'}
+                  </div>
+                  <p className="antialiased">{msg.content}</p>
+                </div>
               </div>
-              <p className="antialiased">{chat.message}</p>
-            </div>
-          </div>
-        ))}
+            ),
+        )}
       </div>
       <form
         onSubmit={handleSubmit}
