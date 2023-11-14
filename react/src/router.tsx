@@ -27,14 +27,15 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: '/dashboard',
     element: <Layout />,
     children: [
       {
-        path: '/dashboard',
+        index: true,
         element: <Dashboard />,
       },
       {
-        path: '/dashboard/conversation/:id',
+        path: 'conversation/:id',
         element: <Conversation />,
       },
     ],
