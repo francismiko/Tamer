@@ -1,6 +1,6 @@
 import { Loading } from '@/components/Loading';
 import { useCreateChat } from '@/hooks/useSWRMutation/useCreateChat';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   TEInput,
@@ -23,11 +23,11 @@ export function ChatModal({
   const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
   const navigate = useNavigate();
 
-  const handleCreate = useCallback(async () => {
+  const handleCreate = async () => {
     const { id } = await createChat({ title, chatModel, owner });
     navigate(`/dashboard/conversation/${id}`);
     setShowModal(false);
-  }, [title, chatModel, owner]);
+  };
 
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
