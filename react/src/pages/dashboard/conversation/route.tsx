@@ -1,28 +1,13 @@
 import { useChat } from '@/hooks/useSWR/useChat';
+import { useMessages } from '@/hooks/useSWR/useMessages';
 import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const messages: Message[] = [
-  {
-    id: '111',
-    sender: 'Human',
-    content: '你好！',
-    status: 'Done',
-    create_at: new Date('2021-08-01T00:00:00Z'),
-  },
-  {
-    id: '112',
-    sender: 'AI',
-    content: '你好，有什么我可以帮助你的吗？',
-    status: 'Done',
-    create_at: new Date('2021-08-01T00:00:00Z'),
-  },
-];
-
 export function Conversation(): JSX.Element {
   const { id } = useParams();
   const { chat } = useChat(id);
+  const { messages, mutate } = useMessages(id);
   const { createMessage } = useCreateMessage();
   const [inputValue, setInputValue] = useState('');
 
@@ -30,13 +15,22 @@ export function Conversation(): JSX.Element {
     event.preventDefault();
     if (inputValue && id) {
       const message = inputValue;
+      const newMsg: Message = {
+        id: '',
+        content: message,
+        status: 'Done',
+        sender: 'Human',
+        create_at: new Date(),
+      };
       setInputValue('');
 
+      mutate((prev) => [...(prev || []), newMsg], false);
+
       const res = await createMessage({
-        message,
+        message: inputValue,
         chatId: id,
       });
-      console.log({ res });
+      console.log(res);
     }
   };
 
@@ -50,15 +44,10 @@ export function Conversation(): JSX.Element {
       {useMemo(
         () => (
           <div className="flex-1 overflow-y-auto">
-            {messages.map(
+            {messages?.map(
               (msg) =>
                 msg.status === 'Done' && (
-                  <div
-                    key={msg.id}
-                    className={`py-4 ${
-                      msg.sender === 'Human' && 'bg-slate-600'
-                    }`}
-                  >
+                  <div key={msg.id} className="py-4">
                     <div className="w-3/5 mx-auto">
                       <div className="font-bold">
                         {msg.sender === 'Human' ? 'user' : 'bot'}

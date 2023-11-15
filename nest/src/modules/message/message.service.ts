@@ -14,6 +14,12 @@ export class MessageService {
     });
   }
 
+  getMessagesByChatId(chat_id: string): Promise<Message[]> {
+    return this.prisma.message.findMany({
+      where: { chat_id },
+    });
+  }
+
   async generateAIMessage(input: {
     message: string;
     chatId: string;
