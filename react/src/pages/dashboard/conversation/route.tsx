@@ -8,7 +8,7 @@ export function Conversation(): JSX.Element {
   const { id } = useParams();
   const { chat } = useChat(id);
   const { messages, mutate } = useMessages(id);
-  const { createMessage } = useCreateMessage();
+  const { createMessage, isMutating } = useCreateMessage();
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,7 +24,9 @@ export function Conversation(): JSX.Element {
       };
       setInputValue('');
 
-      mutate((prev) => [...(prev || []), newMsg], false);
+      mutate((prev) => [...(prev || []), newMsg], {
+        revalidate: false,
+      });
 
       const res = await createMessage({
         message: inputValue,
@@ -71,6 +73,7 @@ export function Conversation(): JSX.Element {
           placeholder="输入你的消息..."
           className="w-3/5 p-4 bg-gray-600 rounded-lg focus:outline-none mx-auto"
           onChange={(e) => setInputValue(e.target.value)}
+          disabled={isMutating}
         />
       </form>
     </div>
