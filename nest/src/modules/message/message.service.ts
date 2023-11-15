@@ -39,6 +39,7 @@ export class MessageService {
       },
     });
 
+    // TODO: use chunking to send multiple messages
     return this.prisma.message.create({
       data: {
         content: AIMessage,
