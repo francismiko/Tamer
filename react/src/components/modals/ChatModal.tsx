@@ -84,6 +84,7 @@ export function ChatModal({
                         <img
                           className="object-cover w-full aspect-square md:h-16 md:w-16 md:rounded-xl"
                           src={iconUrl}
+                          draggable="false"
                         />
                         <div className="flex flex-col justify-start px-2 py-1">
                           <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
