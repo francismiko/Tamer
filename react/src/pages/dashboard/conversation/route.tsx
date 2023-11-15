@@ -1,7 +1,7 @@
 import { useChat } from '@/hooks/useSWR/useChat';
 import { useMessages } from '@/hooks/useSWR/useMessages';
 import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export function Conversation(): JSX.Element {
@@ -10,6 +10,7 @@ export function Conversation(): JSX.Element {
   const { messages, mutate } = useMessages(id);
   const { createMessage, isMutating } = useCreateMessage();
   const [inputValue, setInputValue] = useState('');
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,6 +37,12 @@ export function Conversation(): JSX.Element {
     }
   };
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className="flex flex-col h-screen relative">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-2 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
@@ -43,7 +50,7 @@ export function Conversation(): JSX.Element {
           <p className="font-bold">{chat?.chat_model}</p>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto">
         {messages?.map(
           (msg) =>
             msg.status === 'Done' && (
