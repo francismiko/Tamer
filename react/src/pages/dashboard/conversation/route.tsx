@@ -1,6 +1,6 @@
 import { useChat } from '@/hooks/useSWR/useChat';
 import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
-import { useMemo, useRef } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const messages: Message[] = [
@@ -24,17 +24,19 @@ export function Conversation(): JSX.Element {
   const { id } = useParams();
   const { chat } = useChat(id);
   const { createMessage } = useCreateMessage();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (inputRef.current?.value && id) {
+    if (inputValue && id) {
+      const message = inputValue;
+      setInputValue('');
+
       const res = await createMessage({
-        message: inputRef.current?.value,
+        message,
         chatId: id,
       });
       console.log({ res });
-      inputRef.current.value = '';
     }
   };
 
@@ -76,9 +78,10 @@ export function Conversation(): JSX.Element {
       >
         <input
           type="text"
-          ref={inputRef}
-          placeholder="输入你的消息"
+          value={inputValue}
+          placeholder="输入你的消息..."
           className="w-3/5 p-4 bg-gray-600 rounded-lg focus:outline-none mx-auto"
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </form>
     </div>
