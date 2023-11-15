@@ -1,7 +1,7 @@
 import { createGPTChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
-import { BaseMessage, HumanMessage } from 'langchain/schema';
+import { HumanMessage } from 'langchain/schema';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
@@ -14,10 +14,32 @@ export class MessageService {
     });
   }
 
-  generateAIMessage(input: { message: string }): Promise<BaseMessage> {
-    const { message } = input;
+  async generateAIMessage(input: {
+    message: string;
+    chatId: string;
+  }): Promise<Message> {
+    const { message, chatId } = input;
     const chatModel = createGPTChatModel();
 
-    return chatModel.call([new HumanMessage(message)]);
+    const res = await chatModel.call([new HumanMessage(message)]);
+    const AIMessage = res.content;
+
+    await this.prisma.message.create({
+      data: {
+        content: message,
+        sender: 'Human',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
+
+    return this.prisma.message.create({
+      data: {
+        content: AIMessage,
+        sender: 'AI',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
   }
 }

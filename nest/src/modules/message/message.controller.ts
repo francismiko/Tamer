@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Message } from '@prisma/client';
-import { BaseMessage } from 'langchain/schema';
 import { MessageService } from './message.service';
 
 @Controller('message')
@@ -13,7 +12,9 @@ export class MessageController {
   }
 
   @Post()
-  generateAIMessage(@Body() body: { message: string }): Promise<BaseMessage> {
+  generateAIMessage(
+    @Body() body: { message: string; chatId: string },
+  ): Promise<Message> {
     return this.messageService.generateAIMessage(body);
   }
 }

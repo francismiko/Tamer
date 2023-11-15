@@ -1,18 +1,19 @@
 import { useChat } from '@/hooks/useSWR/useChat';
+import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
 import { useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 const messages: Message[] = [
   {
     id: '111',
-    sender: 'User',
+    sender: 'Human',
     content: '你好！',
     status: 'Done',
     create_at: new Date('2021-08-01T00:00:00Z'),
   },
   {
     id: '112',
-    sender: 'Bot',
+    sender: 'AI',
     content: '你好，有什么我可以帮助你的吗？',
     status: 'Done',
     create_at: new Date('2021-08-01T00:00:00Z'),
@@ -22,11 +23,17 @@ const messages: Message[] = [
 export function Conversation(): JSX.Element {
   const { id } = useParams();
   const { chat } = useChat(id);
+  const { createMessage } = useCreateMessage();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (inputRef.current?.value) {
+    if (inputRef.current?.value && id) {
+      const res = await createMessage({
+        message: inputRef.current?.value,
+        chatId: id,
+      });
+      console.log({ res });
       inputRef.current.value = '';
     }
   };
@@ -47,12 +54,12 @@ export function Conversation(): JSX.Element {
                   <div
                     key={msg.id}
                     className={`py-4 ${
-                      msg.sender === 'User' && 'bg-slate-600'
+                      msg.sender === 'Human' && 'bg-slate-600'
                     }`}
                   >
                     <div className="w-3/5 mx-auto">
                       <div className="font-bold">
-                        {msg.sender === 'User' ? 'user' : 'bot'}
+                        {msg.sender === 'Human' ? 'user' : 'bot'}
                       </div>
                       <p className="antialiased">{msg.content}</p>
                     </div>

@@ -3,3 +3,8 @@ type CreateChatArg = {
   title: string;
   owner: string | undefined;
 };
+
+type CreateMessageArg = {
+  message: string;
+  chatId: string;
+};
