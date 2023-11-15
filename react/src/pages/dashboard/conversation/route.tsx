@@ -16,7 +16,7 @@ export function Conversation(): JSX.Element {
     if (inputValue && id) {
       const message = inputValue;
       const newMsg: Message = {
-        id: '',
+        id: new Date().getTime().toString(),
         content: message,
         status: 'Done',
         sender: 'Human',
