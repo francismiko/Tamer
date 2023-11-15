@@ -71,7 +71,7 @@ export function Conversation(): JSX.Element {
           type="text"
           value={inputValue}
           placeholder="输入你的消息..."
-          className="w-3/5 p-4 bg-gray-600 rounded-lg focus:outline-none mx-auto"
+          className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
           onChange={(e) => setInputValue(e.target.value)}
           disabled={isMutating}
         />
