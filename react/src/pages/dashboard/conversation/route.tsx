@@ -45,20 +45,14 @@ export function Conversation(): JSX.Element {
         message: inputValue,
         chatId: id,
       });
-      const reader = res.body?.getReader();
       const textDecoder = new TextDecoder();
-      let buffer = '';
+      const reader = res.body?.getReader();
 
       for (;;) {
-        if (!reader) return;
-        const { done, value } = await reader.read();
-        if (done) return;
+        if (reader) {
+          const { done, value } = await reader.read();
+          if (done) return;
 
-        buffer += textDecoder.decode(value, { stream: true });
-        let eolIndex;
-        while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
-          const message = buffer.slice(0, eolIndex).trim();
-          buffer = buffer.slice(eolIndex + 2);
           mutate(
             (prev) => {
               const newPrev = [...(prev || [])];
@@ -68,7 +62,10 @@ export function Conversation(): JSX.Element {
                   ...newPrev.slice(-1)[0],
                   content:
                     newPrev.slice(-1)[0].content +
-                    message.split('\n')[1].slice('data: '.length),
+                    textDecoder
+                      .decode(value, { stream: true })
+                      .split('\n')[1]
+                      .slice('data: '.length),
                 },
               ];
             },
