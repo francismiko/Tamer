@@ -60,18 +60,32 @@ export class MessageService {
     return str;
   }
 
-  async createMessage(
-    content: string,
-    sender: 'Human' | 'AI',
-    chatId: string,
-  ): Promise<void> {
-    await this.prisma.message.create({
-      data: {
-        content,
-        sender,
-        status: 'Done',
-        chat_id: chatId,
-      },
-    });
+  async createChatMessages({
+    humanMessage,
+    AIMessage,
+    chatId,
+  }: {
+    humanMessage: string;
+    AIMessage: string;
+    chatId: string;
+  }): Promise<void> {
+    await Promise.allSettled([
+      this.prisma.message.create({
+        data: {
+          content: humanMessage,
+          sender: 'Human',
+          status: 'Done',
+          chat_id: chatId,
+        },
+      }),
+      this.prisma.message.create({
+        data: {
+          content: AIMessage,
+          sender: 'AI',
+          status: 'Done',
+          chat_id: chatId,
+        },
+      }),
+    ]);
   }
 }
