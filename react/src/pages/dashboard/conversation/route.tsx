@@ -12,18 +12,18 @@ export function Conversation(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitMessage = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     if (inputValue && id) {
-      const message = inputValue;
       setInputValue('');
-
       mutate(
         (prev) => [
           ...(prev || []),
           {
             id: new Date().getTime().toString(),
-            content: message,
+            content: inputValue,
             status: 'Done',
             sender: 'Human',
             create_at: new Date(),
@@ -66,16 +66,16 @@ export function Conversation(): JSX.Element {
               const dataLine = message.split('\n')[1];
               if (dataLine.startsWith('data: ')) {
                 const dataValue = dataLine.slice('data: '.length);
-                console.log(dataValue);
-
                 mutate(
                   (prev) => {
                     const newPrev = [...(prev || [])];
-                    newPrev[newPrev.length - 1] = {
-                      ...newPrev.slice(-1)[0],
-                      content: newPrev.slice(-1)[0].content + dataValue,
-                    };
-                    return newPrev;
+                    return [
+                      ...newPrev.slice(0, -1),
+                      {
+                        ...newPrev.slice(-1)[0],
+                        content: newPrev.slice(-1)[0].content + dataValue,
+                      },
+                    ];
                   },
                   {
                     revalidate: false,
@@ -118,7 +118,7 @@ export function Conversation(): JSX.Element {
         )}
       </div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitMessage}
         className="p-6 border-t border-slate-400 flex"
       >
         <input
