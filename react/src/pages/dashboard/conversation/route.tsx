@@ -45,45 +45,37 @@ export function Conversation(): JSX.Element {
         message: inputValue,
         chatId: id,
       });
-
       const reader = res.body?.getReader();
       const textDecoder = new TextDecoder();
       let buffer = '';
 
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
-        if (reader) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      for (;;) {
+        if (!reader) return;
+        const { done, value } = await reader.read();
+        if (done) return;
 
-          buffer += textDecoder.decode(value, { stream: true });
-          let eolIndex;
-          while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
-            const message = buffer.slice(0, eolIndex).trim();
-            buffer = buffer.slice(eolIndex + 2);
-
-            if (message.startsWith('event: data')) {
-              const dataLine = message.split('\n')[1];
-              if (dataLine.startsWith('data: ')) {
-                const dataValue = dataLine.slice('data: '.length);
-                mutate(
-                  (prev) => {
-                    const newPrev = [...(prev || [])];
-                    return [
-                      ...newPrev.slice(0, -1),
-                      {
-                        ...newPrev.slice(-1)[0],
-                        content: newPrev.slice(-1)[0].content + dataValue,
-                      },
-                    ];
-                  },
-                  {
-                    revalidate: false,
-                  },
-                );
-              }
-            }
-          }
+        buffer += textDecoder.decode(value, { stream: true });
+        let eolIndex;
+        while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
+          const message = buffer.slice(0, eolIndex).trim();
+          buffer = buffer.slice(eolIndex + 2);
+          mutate(
+            (prev) => {
+              const newPrev = [...(prev || [])];
+              return [
+                ...newPrev.slice(0, -1),
+                {
+                  ...newPrev.slice(-1)[0],
+                  content:
+                    newPrev.slice(-1)[0].content +
+                    message.split('\n')[1].slice('data: '.length),
+                },
+              ];
+            },
+            {
+              revalidate: false,
+            },
+          );
         }
       }
     }
