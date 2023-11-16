@@ -41,7 +41,10 @@ export class MessageController {
       response.write(chunk);
     }
 
-    this.messageService.saveMessage({ humanMsg: message, AIMsg: str, chatId });
+    await Promise.all([
+      this.messageService.createMessage(message, 'Human', chatId),
+      this.messageService.createMessage(str, 'AI', chatId),
+    ]);
 
     response.end();
   }
