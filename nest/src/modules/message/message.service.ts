@@ -1,6 +1,8 @@
 import { createGPTChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
+import { IterableReadableStream } from 'langchain/dist/util/stream';
+import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { HumanMessage } from 'langchain/schema';
 import { PrismaService } from 'nestjs-prisma';
 
@@ -23,12 +25,14 @@ export class MessageService {
   async generateAIMessage(input: {
     message: string;
     chatId: string;
-  }): Promise<Message> {
+  }): Promise<IterableReadableStream<Uint8Array>> {
     const { message, chatId } = input;
+
     const chatModel = createGPTChatModel();
 
-    const res = await chatModel.call([new HumanMessage(message)]);
-    const AIMessage = res.content;
+    const parser = new HttpResponseOutputParser({
+      contentType: 'text/event-stream',
+    });
 
     await this.prisma.message.create({
       data: {
@@ -39,14 +43,10 @@ export class MessageService {
       },
     });
 
-    // TODO: use chunking to send multiple messages
-    return this.prisma.message.create({
-      data: {
-        content: AIMessage,
-        sender: 'AI',
-        status: 'Done',
-        chat_id: chatId,
-      },
-    });
+    const stream = await chatModel
+      .pipe(parser)
+      .stream([new HumanMessage(message)]);
+
+    return stream;
   }
 }

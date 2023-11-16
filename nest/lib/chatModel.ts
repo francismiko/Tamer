@@ -7,6 +7,7 @@ export const createGPTChatModel = (): ChatOpenAI => {
       modelName: 'gpt-3.5-turbo-1106',
       temperature: 1,
       timeout: 15 * 1000,
+      streaming: true,
     },
     {
       basePath:

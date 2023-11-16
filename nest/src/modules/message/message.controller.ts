@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { Message } from '@prisma/client';
+import { Response } from 'express';
 import { MessageService } from './message.service';
 
 @Controller('message')
@@ -17,9 +27,17 @@ export class MessageController {
   }
 
   @Post()
-  generateAIMessage(
+  @Header('Content-Type', 'text/event-stream')
+  async generateAIMessage(
+    @Res() response: Response,
     @Body() body: { message: string; chatId: string },
-  ): Promise<Message> {
-    return this.messageService.generateAIMessage(body);
+  ): Promise<void> {
+    const stream = await this.messageService.generateAIMessage(body);
+
+    for await (const chunk of stream) {
+      response.write(chunk);
+    }
+
+    response.end();
   }
 }

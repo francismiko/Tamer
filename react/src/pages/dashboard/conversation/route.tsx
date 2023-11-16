@@ -33,7 +33,35 @@ export function Conversation(): JSX.Element {
         message: inputValue,
         chatId: id,
       });
-      console.log(res);
+
+      const reader = res.body?.getReader();
+      const textDecoder = new TextDecoder();
+      let buffer = '';
+
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        if (reader) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += textDecoder.decode(value, { stream: true });
+          let eolIndex;
+          while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
+            const message = buffer.slice(0, eolIndex).trim();
+            buffer = buffer.slice(eolIndex + 2);
+
+            if (message.startsWith('event: data')) {
+              const dataLine = message.split('\n')[1];
+              if (dataLine.startsWith('data: ')) {
+                const dataValue = dataLine.slice('data: '.length);
+                console.log(dataValue);
+              }
+            }
+          }
+        }
+      }
+
+      // mutate((prev) => [...(prev || []), AIMsg]);
     }
   };
 
