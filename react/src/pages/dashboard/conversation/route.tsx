@@ -70,15 +70,12 @@ export function Conversation(): JSX.Element {
 
                 mutate(
                   (prev) => {
-                    if (prev) {
-                      const newPrev = [...prev];
-                      newPrev[newPrev.length - 1] = {
-                        ...newPrev[newPrev.length - 1],
-                        content:
-                          newPrev[newPrev.length - 1].content + dataValue,
-                      };
-                      return newPrev;
-                    }
+                    const newPrev = [...(prev || [])];
+                    newPrev[newPrev.length - 1] = {
+                      ...newPrev.slice(-1)[0],
+                      content: newPrev.slice(-1)[0].content + dataValue,
+                    };
+                    return newPrev;
                   },
                   {
                     revalidate: false,
