@@ -34,16 +34,18 @@ export class MessageController {
   ): Promise<void> {
     const { message, chatId } = body;
     const stream = await this.messageService.generateModelStream(message);
-    let str = '';
+    const chunks: Uint8Array[] = [];
 
     for await (const chunk of stream) {
-      str += this.messageService.streamDecode(chunk);
+      chunks.push(chunk);
       response.write(chunk);
     }
 
+    const AIMessage = this.messageService.streamDecode(chunks);
+
     await this.messageService.createChatMessages({
       humanMessage: message,
-      AIMessage: str,
+      AIMessage,
       chatId,
     });
 

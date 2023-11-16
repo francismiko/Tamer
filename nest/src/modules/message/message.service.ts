@@ -38,27 +38,16 @@ export class MessageService {
     return stream;
   }
 
-  streamDecode(chunk: Uint8Array): string {
-    const decoder = new TextDecoder();
-    let buffer = '';
-    let str = '';
-
-    buffer += decoder.decode(chunk, { stream: true });
-    let eolIndex;
-    while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
-      const message = buffer.slice(0, eolIndex).trim();
-      buffer = buffer.slice(eolIndex + 2);
-
-      if (message.startsWith('event: data')) {
-        const dataLine = message.split('\n')[1];
-        if (dataLine.startsWith('data: ')) {
-          const dataValue = dataLine.slice('data: '.length);
-          str = dataValue;
-        }
-      }
-    }
-
-    return str;
+  streamDecode(chunks: Uint8Array[]): string {
+    return chunks
+      .map((chunk) =>
+        new TextDecoder()
+          .decode(chunk, { stream: true })
+          .split('\n\n')
+          .map((line) => line.trim().split('\n')[1]?.slice(6))
+          .join(''),
+      )
+      .join('');
   }
 
   async createChatMessages({
