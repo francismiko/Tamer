@@ -20,5 +20,6 @@
 - [x] 配置React Router
 - [x] 集成TW Element
 - [x] 全局Layout
+- [x] 支持流式数据渲染
 - [ ] 用户文件上传
 - [ ] 自定义LLM
