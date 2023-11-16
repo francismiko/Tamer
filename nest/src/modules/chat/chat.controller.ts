@@ -17,7 +17,9 @@ export class ChatController {
   }
 
   @Post()
-  createChat(@Body() body: Chat): Promise<Chat> {
+  createChat(
+    @Body() body: { owner: string; title: string; chat_model: string },
+  ): Promise<Chat> {
     return this.chatService.createChat(body);
   }
 }
