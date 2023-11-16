@@ -32,11 +32,16 @@ export class MessageController {
     @Res() response: Response,
     @Body() body: { message: string; chatId: string },
   ): Promise<void> {
-    const stream = await this.messageService.generateAIMessage(body);
+    const { message, chatId } = body;
+    const stream = await this.messageService.generateModelStream(message);
+    let str = '';
 
     for await (const chunk of stream) {
+      str += this.messageService.streamDecode(chunk);
       response.write(chunk);
     }
+
+    this.messageService.saveMessage({ humanMsg: message, AIMsg: str, chatId });
 
     response.end();
   }

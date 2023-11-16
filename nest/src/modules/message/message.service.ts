@@ -22,25 +22,12 @@ export class MessageService {
     });
   }
 
-  async generateAIMessage(input: {
-    message: string;
-    chatId: string;
-  }): Promise<IterableReadableStream<Uint8Array>> {
-    const { message, chatId } = input;
-
+  async generateModelStream(
+    message: string,
+  ): Promise<IterableReadableStream<Uint8Array>> {
     const chatModel = createGPTChatModel();
-
     const parser = new HttpResponseOutputParser({
       contentType: 'text/event-stream',
-    });
-
-    await this.prisma.message.create({
-      data: {
-        content: message,
-        sender: 'Human',
-        status: 'Done',
-        chat_id: chatId,
-      },
     });
 
     const stream = await chatModel
@@ -48,5 +35,54 @@ export class MessageService {
       .stream([new HumanMessage(message)]);
 
     return stream;
+  }
+
+  streamDecode(chunk: Uint8Array): string {
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let str = '';
+
+    buffer += decoder.decode(chunk, { stream: true });
+    let eolIndex;
+    while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
+      const message = buffer.slice(0, eolIndex).trim();
+      buffer = buffer.slice(eolIndex + 2);
+
+      if (message.startsWith('event: data')) {
+        const dataLine = message.split('\n')[1];
+        if (dataLine.startsWith('data: ')) {
+          const dataValue = dataLine.slice('data: '.length);
+          str = dataValue;
+        }
+      }
+    }
+
+    return str;
+  }
+
+  async saveMessage(input: {
+    humanMsg: string;
+    AIMsg: string;
+    chatId: string;
+  }): Promise<void> {
+    const { humanMsg, AIMsg, chatId } = input;
+
+    await this.prisma.message.create({
+      data: {
+        content: humanMsg,
+        sender: 'Human',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
+
+    await this.prisma.message.create({
+      data: {
+        content: AIMsg,
+        sender: 'AI',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
   }
 }
