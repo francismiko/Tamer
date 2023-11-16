@@ -45,39 +45,35 @@ export function Conversation(): JSX.Element {
         message: inputValue,
         chatId: id,
       });
-      const textDecoder = new TextDecoder();
       const reader = res.body?.getReader();
+      const textDecoder = new TextDecoder();
       if (!reader) return;
-      let buffer = '';
 
       for (;;) {
         const { done, value } = await reader.read();
         if (done) return;
-        buffer += textDecoder.decode(value, { stream: true });
-        let eolIndex;
-        while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
-          const context = buffer
-            .slice(0, eolIndex)
-            .trim()
-            .split('\n')[1]
-            .slice(6);
-          buffer = buffer.slice(eolIndex + 2);
-          mutate(
-            (prev) => {
-              const newPrev = [...(prev || [])];
-              return [
-                ...newPrev.slice(0, -1),
-                {
-                  ...newPrev.slice(-1)[0],
-                  content: newPrev.slice(-1)[0].content + context,
-                },
-              ];
-            },
-            {
-              revalidate: false,
-            },
-          );
-        }
+
+        const decodedChunk = textDecoder
+          .decode(value, { stream: true })
+          .split('\n\n')
+          .map((line) => line.trim().split('\n')[1]?.slice(6))
+          .join('');
+
+        mutate(
+          (prev) => {
+            const newPrev = [...(prev || [])];
+            return [
+              ...newPrev.slice(0, -1),
+              {
+                ...newPrev.slice(-1)[0],
+                content: newPrev.slice(-1)[0].content + decodedChunk,
+              },
+            ];
+          },
+          {
+            revalidate: false,
+          },
+        );
       }
     }
   };
