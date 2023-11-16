@@ -47,12 +47,21 @@ export function Conversation(): JSX.Element {
       });
       const textDecoder = new TextDecoder();
       const reader = res.body?.getReader();
+      if (!reader) return;
+      let buffer = '';
 
       for (;;) {
-        if (reader) {
-          const { done, value } = await reader.read();
-          if (done) return;
-
+        const { done, value } = await reader.read();
+        if (done) return;
+        buffer += textDecoder.decode(value, { stream: true });
+        let eolIndex;
+        while ((eolIndex = buffer.indexOf('\n\n')) >= 0) {
+          const context = buffer
+            .slice(0, eolIndex)
+            .trim()
+            .split('\n')[1]
+            .slice(6);
+          buffer = buffer.slice(eolIndex + 2);
           mutate(
             (prev) => {
               const newPrev = [...(prev || [])];
@@ -60,12 +69,7 @@ export function Conversation(): JSX.Element {
                 ...newPrev.slice(0, -1),
                 {
                   ...newPrev.slice(-1)[0],
-                  content:
-                    newPrev.slice(-1)[0].content +
-                    textDecoder
-                      .decode(value, { stream: true })
-                      .split('\n')[1]
-                      .slice('data: '.length),
+                  content: newPrev.slice(-1)[0].content + context,
                 },
               ];
             },

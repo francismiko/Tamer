@@ -30,6 +30,7 @@ export function Layout(): JSX.Element {
           fetch(import.meta.env.VITE_BACKEND_URL + url).then((res) =>
             res.json(),
           ),
+        refreshInterval: 1000 * 300,
       }}
     >
       <Sidebar />
