@@ -10,8 +10,8 @@ datasource db {
 }
 
 enum MessageSender {
-  User
-  Bot
+  Human
+  AI
 
   @@schema("public")
 }

@@ -1,6 +1,6 @@
 import { Loading } from '@/components/Loading';
 import { useCreateChat } from '@/hooks/useSWRMutation/useCreateChat';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   TEInput,
@@ -23,11 +23,11 @@ export function ChatModal({
   const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
   const navigate = useNavigate();
 
-  const handleCreate = useCallback(async () => {
+  const handleCreate = async () => {
     const { id } = await createChat({ title, chatModel, owner });
     navigate(`/dashboard/conversation/${id}`);
     setShowModal(false);
-  }, [title, chatModel, owner]);
+  };
 
   return (
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
@@ -68,38 +68,32 @@ export function ChatModal({
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
           {/* <!--Modal body--> */}
           <TEModalBody className="grid grid-cols-1 px-6 md:grid-cols-2 gap-x-6 gap-y-4">
-            {useMemo(
-              () => (
-                <>
-                  {modelCards.map(
-                    ({ iconUrl, model, parameters, context }, index) => (
-                      <div
-                        key={index}
-                        className={`flex flex-col rounded-xl bg-white drop-shadow-xl dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer ${
-                          chatModel === model &&
-                          'outline-none outline-white outline-3'
-                        }`}
-                        onClick={() => setChatModel(model)}
-                      >
-                        <img
-                          className="object-cover w-full aspect-square md:h-16 md:w-16 md:rounded-xl"
-                          src={iconUrl}
-                        />
-                        <div className="flex flex-col justify-start px-2 py-1">
-                          <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
-                            {model}
-                          </p>
-                          <p className="text-xs font-light text-neutral-600 dark:text-neutral-300">
-                            <strong>{parameters}</strong> parameters, up to{' '}
-                            <strong>{context}</strong> token context.
-                          </p>
-                        </div>
-                      </div>
-                    ),
-                  )}
-                </>
+            {modelCards.map(
+              ({ iconUrl, model, parameters, context }, index) => (
+                <div
+                  key={index}
+                  className={`flex flex-col rounded-xl bg-white drop-shadow-xl dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer ${
+                    chatModel === model &&
+                    'outline-none outline-white outline-3'
+                  }`}
+                  onClick={() => setChatModel(model)}
+                >
+                  <img
+                    className="object-cover w-full aspect-square md:h-16 md:w-16 md:rounded-xl"
+                    src={iconUrl}
+                    draggable="false"
+                  />
+                  <div className="flex flex-col justify-start px-2 py-1">
+                    <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
+                      {model}
+                    </p>
+                    <p className="text-xs font-light text-neutral-600 dark:text-neutral-300">
+                      <strong>{parameters}</strong> parameters, up to{' '}
+                      <strong>{context}</strong> token context.
+                    </p>
+                  </div>
+                </div>
               ),
-              [chatModel],
             )}
           </TEModalBody>
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />

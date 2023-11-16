@@ -9,7 +9,7 @@ type Chat = {
 type Message = {
   id: string;
   content: string;
-  sender: 'User' | 'Bot';
+  sender: 'Human' | 'AI';
   status: 'Pending' | 'Reject' | 'Done';
   create_at: Date;
 };
