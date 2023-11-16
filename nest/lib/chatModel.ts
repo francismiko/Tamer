@@ -6,7 +6,7 @@ export const createGPTChatModel = (): ChatOpenAI => {
       openAIApiKey: process.env.OPENAI_API_KEY,
       modelName: 'gpt-3.5-turbo-1106',
       temperature: 1,
-      timeout: 15 * 1000,
+      timeout: 5 * 1000,
       streaming: true,
     },
     {
