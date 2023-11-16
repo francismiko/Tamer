@@ -19,6 +19,7 @@ export class MessageService {
   getMessagesByChatId(chat_id: string): Promise<Message[]> {
     return this.prisma.message.findMany({
       where: { chat_id },
+      orderBy: { create_at: 'asc' },
     });
   }
 
@@ -69,23 +70,22 @@ export class MessageService {
     AIMessage: string;
     chatId: string;
   }): Promise<void> {
-    await Promise.allSettled([
-      this.prisma.message.create({
-        data: {
-          content: humanMessage,
-          sender: 'Human',
-          status: 'Done',
-          chat_id: chatId,
-        },
-      }),
-      this.prisma.message.create({
-        data: {
-          content: AIMessage,
-          sender: 'AI',
-          status: 'Done',
-          chat_id: chatId,
-        },
-      }),
-    ]);
+    await this.prisma.message.create({
+      data: {
+        content: humanMessage,
+        sender: 'Human',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
+
+    await this.prisma.message.create({
+      data: {
+        content: AIMessage,
+        sender: 'AI',
+        status: 'Done',
+        chat_id: chatId,
+      },
+    });
   }
 }
