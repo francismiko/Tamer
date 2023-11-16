@@ -16,18 +16,30 @@ export function Conversation(): JSX.Element {
     event.preventDefault();
     if (inputValue && id) {
       const message = inputValue;
-      const newMsg: Message = {
-        id: new Date().getTime().toString(),
-        content: message,
-        status: 'Done',
-        sender: 'Human',
-        create_at: new Date(),
-      };
       setInputValue('');
 
-      mutate((prev) => [...(prev || []), newMsg], {
-        revalidate: false,
-      });
+      mutate(
+        (prev) => [
+          ...(prev || []),
+          {
+            id: new Date().getTime().toString(),
+            content: message,
+            status: 'Done',
+            sender: 'Human',
+            create_at: new Date(),
+          },
+          {
+            id: new Date().getTime().toString() + '1',
+            content: '',
+            status: 'Done',
+            sender: 'AI',
+            create_at: new Date(),
+          },
+        ],
+        {
+          revalidate: false,
+        },
+      );
 
       const res = await createMessage({
         message: inputValue,
@@ -55,13 +67,28 @@ export function Conversation(): JSX.Element {
               if (dataLine.startsWith('data: ')) {
                 const dataValue = dataLine.slice('data: '.length);
                 console.log(dataValue);
+
+                mutate(
+                  (prev) => {
+                    if (prev) {
+                      const newPrev = [...prev];
+                      newPrev[newPrev.length - 1] = {
+                        ...newPrev[newPrev.length - 1],
+                        content:
+                          newPrev[newPrev.length - 1].content + dataValue,
+                      };
+                      return newPrev;
+                    }
+                  },
+                  {
+                    revalidate: false,
+                  },
+                );
               }
             }
           }
         }
       }
-
-      // mutate((prev) => [...(prev || []), AIMsg]);
     }
   };
 
