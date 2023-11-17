@@ -2,20 +2,21 @@ import { Logger } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
 export function logger(req: Request, res: Response, next: NextFunction): void {
+  const { method, originalUrl } = req;
+  new Logger('Request').log(method + originalUrl);
+
   res.on('finish', () => {
-    const { method, originalUrl } = req;
     const { statusCode } = res;
-    const logger = new Logger(`Response ${statusCode}`);
-    const message = `${method} ${originalUrl}`;
+    const logger = new Logger(`HTTP ${statusCode}`);
 
     if (statusCode >= 500) {
-      logger.error(message);
+      logger.error(method + originalUrl);
     } else if (statusCode >= 400) {
-      logger.warn(message);
+      logger.warn(method + originalUrl);
     } else {
-      logger.log(message);
+      logger.log(method + originalUrl);
     }
   });
-  new Logger('Request').log(`${req.method} ${req.originalUrl}`);
+
   next();
 }
