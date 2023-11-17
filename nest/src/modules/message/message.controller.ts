@@ -29,7 +29,7 @@ export class MessageController {
   @Post()
   @Header('Content-Type', 'text/event-stream')
   async generateAIMessage(
-    @Res() response: Response,
+    @Res() res: Response,
     @Body() body: { message: string; chatId: string },
   ): Promise<void> {
     const { message, chatId } = body;
@@ -38,7 +38,7 @@ export class MessageController {
 
     for await (const chunk of stream) {
       chunks.push(chunk);
-      response.write(chunk);
+      res.write(chunk);
     }
 
     const AIMessage = this.messageService.streamDecode(chunks);
@@ -49,6 +49,6 @@ export class MessageController {
       chatId,
     });
 
-    response.end();
+    setImmediate(() => res.end());
   }
 }

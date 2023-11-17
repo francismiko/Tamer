@@ -117,7 +117,7 @@ export function ChatModal({
 // TODO: use dynamic card
 const modelCards: ModelCard[] = [
   {
-    iconUrl: '/chatgpt.svg',
+    iconUrl: '/GPT-3.5-Turbo.svg',
     model: 'GPT-3.5-Turbo',
     parameters: '175b',
     context: '4k',

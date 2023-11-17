@@ -1,10 +1,12 @@
 import { useChat } from '@/hooks/useSWR/useChat';
 import { useMessages } from '@/hooks/useSWR/useMessages';
 import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
+import { useUser } from '@clerk/clerk-react';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export function Conversation(): JSX.Element {
+  const { user } = useUser();
   const { id } = useParams();
   const { chat } = useChat(id);
   const { messages, mutate } = useMessages(id);
@@ -86,7 +88,7 @@ export function Conversation(): JSX.Element {
 
   return (
     <div className="flex flex-col h-screen relative">
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-2 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
         <div className="text-center">
           <p className="font-bold">{chat?.chat_model}</p>
         </div>
@@ -95,10 +97,21 @@ export function Conversation(): JSX.Element {
         {messages?.map(
           (msg) =>
             msg.status === 'Done' && (
-              <div key={msg.id} className="py-4">
+              <div key={msg.id} className="pb-5 my-5">
                 <div className="w-3/5 mx-auto">
-                  <div className="font-bold">
-                    {msg.sender === 'Human' ? 'user' : 'bot'}
+                  <div className="mb-2 flex items-center">
+                    <img
+                      className="h-8 w-8 md:rounded-full"
+                      src={
+                        msg.sender === 'Human'
+                          ? user?.imageUrl
+                          : `/${chat?.chat_model}.svg`
+                      }
+                      draggable="false"
+                    />
+                    {msg.sender === 'Human' && (
+                      <span className="ml-2">{user?.fullName}</span>
+                    )}
                   </div>
                   <p className="antialiased">{msg.content}</p>
                 </div>
