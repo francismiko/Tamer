@@ -1,5 +1,5 @@
 import { ChatModal } from '@/components/modals/ChatModal';
-import { useChatsByOwner } from '@/hooks/useSWR/useChatsByOwner';
+import { useChatsByOwner } from '@/hooks/useSWR';
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

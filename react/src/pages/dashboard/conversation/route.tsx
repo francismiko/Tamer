@@ -1,6 +1,5 @@
-import { useChat } from '@/hooks/useSWR/useChat';
-import { useMessages } from '@/hooks/useSWR/useMessages';
-import { useCreateMessage } from '@/hooks/useSWRMutation/useCreateMessage';
+import { useChat, useMessages } from '@/hooks/useSWR';
+import { useCreateMessage } from '@/hooks/useSWRMutation';
 import { useUser } from '@clerk/clerk-react';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';

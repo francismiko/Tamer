@@ -1,6 +1,5 @@
 import { Loading } from '@/components/Loading';
-import { useCreateChat } from '@/hooks/useSWRMutation/useCreateChat';
-import { useCreateChatModel } from '@/hooks/useSWRMutation/useCreateChatModel';
+import { useCreateChat, useCreateChatModel } from '@/hooks/useSWRMutation';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
