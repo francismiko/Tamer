@@ -33,8 +33,12 @@ export class MessageController {
     @Body() body: { message: string; chatId: string },
   ): Promise<void> {
     const { message, chatId } = body;
-    const stream = await this.messageService.generateModelStream(message);
     const chunks: Uint8Array[] = [];
+    const chatModel = await this.messageService.useChatModel(chatId);
+    const stream = await this.messageService.generateModelStream(
+      chatModel,
+      message,
+    );
 
     for await (const chunk of stream) {
       chunks.push(chunk);

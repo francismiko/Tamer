@@ -79,7 +79,7 @@ model ChatModel {
   model     String
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
-  chat      Chat     @relation(fields: [chat_id], references: [id])
+  chat      Chat     @relation(fields: [chat_id], references: [id], onDelete: Cascade)
   chat_id   String   @unique @db.Uuid
 
   @@map("chat_model")

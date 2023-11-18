@@ -1,6 +1,7 @@
-import { createOpenAIChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
+import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { BaseChatModel } from 'langchain/dist/chat_models/base';
 import { IterableReadableStream } from 'langchain/dist/util/stream';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { HumanMessage } from 'langchain/schema';
@@ -23,10 +24,26 @@ export class MessageService {
     });
   }
 
+  async useChatModel(chatId: string): Promise<BaseChatModel> {
+    const chatModel = await this.prisma.chatModel.findUnique({
+      where: { chat_id: chatId },
+      select: { model: true },
+    });
+
+    return new ChatOpenAI({
+      openAIApiKey: process.env.OPENAI_API_KEY,
+      configuration: { baseURL: process.env.OPENAI_API_PROXY_URL },
+      modelName: chatModel?.model,
+      temperature: 1,
+      timeout: 5 * 1000,
+      streaming: true,
+    });
+  }
+
   async generateModelStream(
+    chatModel: BaseChatModel,
     message: string,
   ): Promise<IterableReadableStream<Uint8Array>> {
-    const chatModel = createOpenAIChatModel();
     const parser = new HttpResponseOutputParser({
       contentType: 'text/event-stream',
     });
