@@ -10,10 +10,7 @@ export const createGPTChatModel = (): ChatOpenAI => {
       streaming: true,
     },
     {
-      basePath:
-        process.env.NODE_ENV === 'development'
-          ? process.env.OPENAI_API_PROXY_URL
-          : undefined,
+      basePath: process.env.OPENAI_API_PROXY_URL,
     },
   );
 };
