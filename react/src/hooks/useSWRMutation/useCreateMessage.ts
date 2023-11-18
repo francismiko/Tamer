@@ -1,7 +1,7 @@
 import useSWRMutation from 'swr/mutation';
 
 export function useCreateMessage(): {
-  createMessage: (arg: CreateMessageArg) => Promise<Response>;
+  trigger: (arg: CreateMessageArg) => Promise<Response>;
   isMutating: boolean;
 } {
   const { trigger, isMutating } = useSWRMutation(
@@ -21,7 +21,7 @@ export function useCreateMessage(): {
   );
 
   return {
-    createMessage: trigger,
+    trigger,
     isMutating,
   };
 }

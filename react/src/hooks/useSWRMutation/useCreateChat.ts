@@ -1,7 +1,7 @@
 import useSWRMutation from 'swr/mutation';
 
 export function useCreateChat(): {
-  createChat: (arg: CreateChatArg) => Promise<Chat>;
+  trigger: (arg: CreateChatArg) => Promise<Chat>;
   isMutating: boolean;
 } {
   const { trigger, isMutating } = useSWRMutation(
@@ -21,7 +21,7 @@ export function useCreateChat(): {
   );
 
   return {
-    createChat: trigger,
+    trigger,
     isMutating,
   };
 }

@@ -18,15 +18,15 @@ export function ChatModal({
   setShowModal,
   owner,
 }: ChatModalProps): JSX.Element {
-  const { createChat, isMutating } = useCreateChat();
-  const { createChatModel } = useCreateChatModel();
+  const createChat = useCreateChat();
+  const createChatModel = useCreateChatModel();
   const navigate = useNavigate();
   const [title, setTitle] = useState<string | undefined>();
   const [model, setModel] = useState<string>('gpt-3.5-turbo-1106');
 
   const handleCreate = async () => {
-    const chat = await createChat({ title, owner });
-    await createChatModel({
+    const chat = await createChat.trigger({ title, owner });
+    await createChatModel.trigger({
       model,
       owner,
       chatId: chat.id,
@@ -80,7 +80,7 @@ export function ChatModal({
                 className={`flex flex-col rounded-xl bg-white drop-shadow-xl dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer ${
                   model === card.model && 'outline-none outline-white outline-3'
                 }`}
-                onClick={() => setModel(model)}
+                onClick={() => setModel(card.model)}
               >
                 <img
                   className="object-cover w-full aspect-square md:h-16 md:w-16 md:rounded-xl"
@@ -89,7 +89,7 @@ export function ChatModal({
                 />
                 <div className="flex flex-col justify-start px-2 py-1">
                   <p className="mb-1 text-sm font-medium text-neutral-800 dark:text-neutral-50">
-                    {model}
+                    {card.model}
                   </p>
                   <p className="text-xs font-light text-neutral-600 dark:text-neutral-300">
                     <strong>{card.parameters}</strong> parameters, up to{' '}
@@ -107,7 +107,11 @@ export function ChatModal({
                 className="h-9 w-24 items-center inline-block rounded bg-primary text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 onClick={handleCreate}
               >
-                {isMutating ? <Loading size="md" /> : 'Create'}
+                {createChat.isMutating || createChatModel.isMutating ? (
+                  <Loading size="md" />
+                ) : (
+                  'Create'
+                )}
               </button>
             </TERipple>
           </TEModalFooter>

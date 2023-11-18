@@ -10,7 +10,7 @@ export function Conversation(): JSX.Element {
   const { chat } = useChat(id);
   const chatModel = chat?.chat_model;
   const { messages, mutate } = useMessages(id);
-  const { createMessage, isMutating } = useCreateMessage();
+  const createMessage = useCreateMessage();
   const [inputValue, setInputValue] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +45,7 @@ export function Conversation(): JSX.Element {
         revalidate: false,
       });
 
-      const res = await createMessage({
+      const res = await createMessage.trigger({
         message: inputValue,
         chatId: id,
       });
@@ -129,7 +129,7 @@ export function Conversation(): JSX.Element {
           placeholder="输入你的消息..."
           className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={isMutating}
+          disabled={createMessage.isMutating}
         />
       </form>
     </div>
