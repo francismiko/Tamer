@@ -1,4 +1,4 @@
-import { createGPTChatModel } from '@lib/chatModel';
+import { createOpenAIChatModel } from '@lib/chatModel';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
 import { IterableReadableStream } from 'langchain/dist/util/stream';
@@ -26,7 +26,7 @@ export class MessageService {
   async generateModelStream(
     message: string,
   ): Promise<IterableReadableStream<Uint8Array>> {
-    const chatModel = createGPTChatModel();
+    const chatModel = createOpenAIChatModel();
     const parser = new HttpResponseOutputParser({
       contentType: 'text/event-stream',
     });

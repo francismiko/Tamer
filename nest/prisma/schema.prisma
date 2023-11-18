@@ -63,12 +63,26 @@ model Chat {
   id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   owner      String
   title      String     @default("Untitled")
-  chat_model String     @default("GPT-3.5-Turbo")
   messages   Message[]
   exercises  Exercise[]
+  chat_model ChatModel?
   create_at  DateTime   @default(now())
+  update_at  DateTime   @updatedAt
 
   @@map("chat")
+  @@schema("public")
+}
+
+model ChatModel {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  owner     String
+  model     String
+  create_at DateTime @default(now())
+  update_at DateTime @updatedAt
+  chat      Chat     @relation(fields: [chat_id], references: [id])
+  chat_id   String   @unique
+
+  @@map("chat_model")
   @@schema("public")
 }
 
@@ -80,6 +94,7 @@ model Message {
   chat      Chat          @relation(fields: [chat_id], references: [id], onDelete: Cascade)
   chat_id   String        @db.Uuid
   create_at DateTime      @default(now())
+  update_at DateTime      @updatedAt
 
   @@index([chat_id])
   @@map("message")
@@ -95,6 +110,7 @@ model Exercise {
   chat            Chat                   @relation(fields: [chat_id], references: [id], onDelete: Cascade)
   chat_id         String                 @db.Uuid
   create_at       DateTime               @default(now())
+  update_at       DateTime               @updatedAt
 
   @@index([chat_id])
   @@map("exercise")
