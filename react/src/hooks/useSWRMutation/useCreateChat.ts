@@ -13,7 +13,7 @@ export function useCreateChat(): {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: arg.title || 'new Conversation',
+          title: arg.title ?? 'new Conversation',
           chat_model: arg.chatModel,
           owner: arg.owner,
         }),

@@ -28,7 +28,7 @@ const bootstrap = async (): Promise<void> => {
       new HttpExceptionFilter(),
     );
 
-  await app.listen(process.env.PORT || 8000);
+  await app.listen(process.env.PORT ?? 8000);
 
   new Logger('Running').log(`🚀 Service is running on: ${await app.getUrl()}`);
 };

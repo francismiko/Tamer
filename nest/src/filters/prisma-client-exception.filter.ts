@@ -60,6 +60,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       P2034: HttpStatus.INTERNAL_SERVER_ERROR,
     };
 
-    return exceptionCodes[code] || HttpStatus.INTERNAL_SERVER_ERROR;
+    return exceptionCodes[code] ?? HttpStatus.INTERNAL_SERVER_ERROR;
   }
 }

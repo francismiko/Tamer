@@ -8,8 +8,8 @@ import { Ripple, Sidenav, initTE } from 'tw-elements';
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
   const { chats } = useChats(user?.id);
-  const [showModal, setShowModal] = useState(false);
-  const [activeChat, setActiveChat] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [activeChat, setActiveChat] = useState<number | undefined>();
 
   useEffect(() => {
     initTE({ Sidenav, Ripple });

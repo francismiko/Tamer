@@ -19,8 +19,8 @@ export function ChatModal({
   owner,
 }: ChatModalProps): JSX.Element {
   const { createChat, isMutating } = useCreateChat();
-  const [title, setTitle] = useState('');
-  const [chatModel, setChatModel] = useState('GPT-3.5-Turbo');
+  const [title, setTitle] = useState<string | undefined>();
+  const [chatModel, setChatModel] = useState<string>('GPT-3.5-Turbo');
   const navigate = useNavigate();
 
   const handleCreate = async () => {

@@ -1,6 +1,6 @@
 type CreateChatArg = {
   chatModel: string;
-  title: string;
+  title: string | undefined;
   owner: string | undefined;
 };
 

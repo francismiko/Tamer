@@ -11,7 +11,7 @@ export function Conversation(): JSX.Element {
   const { chat } = useChat(id);
   const { messages, mutate } = useMessages(id);
   const { createMessage, isMutating } = useCreateMessage();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string | undefined>();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSubmitMessage = async (
@@ -22,7 +22,7 @@ export function Conversation(): JSX.Element {
       setInputValue('');
       mutate(
         (prev) => [
-          ...(prev || []),
+          ...(prev ?? []),
           {
             id: new Date().getTime().toString(),
             content: inputValue,
@@ -63,7 +63,7 @@ export function Conversation(): JSX.Element {
 
         mutate(
           (prev) => {
-            const newPrev = [...(prev || [])];
+            const newPrev = [...(prev ?? [])];
             return [
               ...newPrev.slice(0, -1),
               {
