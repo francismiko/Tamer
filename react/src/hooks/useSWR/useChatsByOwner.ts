@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-export function useChats(owner: string | undefined): {
+export function useChatsByOwner(owner: string | undefined): {
   chats: Chat[] | undefined;
   isLoading: boolean;
   isError: boolean;

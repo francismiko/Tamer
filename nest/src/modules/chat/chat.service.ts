@@ -11,6 +11,9 @@ export class ChatService {
       where: {
         id,
       },
+      include: {
+        chat_model: true,
+      },
     });
   }
 
@@ -28,17 +31,14 @@ export class ChatService {
   createChat({
     owner,
     title,
-    chatModel,
   }: {
     owner: string;
     title: string;
-    chatModel: string;
   }): Promise<Chat> {
     return this.prisma.chat.create({
       data: {
         owner,
         title,
-        chat_model: chatModel,
       },
     });
   }

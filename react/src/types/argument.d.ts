@@ -1,7 +1,12 @@
 type CreateChatArg = {
-  chatModel: string;
   title: string | undefined;
   owner: string | undefined;
+};
+
+type CreateChatModelArg = {
+  model: string;
+  owner: string | undefined;
+  chatId: string;
 };
 
 type CreateMessageArg = {

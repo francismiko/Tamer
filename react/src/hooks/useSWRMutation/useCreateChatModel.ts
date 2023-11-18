@@ -1,27 +1,28 @@
 import useSWRMutation from 'swr/mutation';
 
-export function useCreateChat(): {
-  createChat: (arg: CreateChatArg) => Promise<Chat>;
+export function useCreateChatModel(): {
+  createChatModel: (arg: CreateChatModelArg) => Promise<ChatModel>;
   isMutating: boolean;
 } {
   const { trigger, isMutating } = useSWRMutation(
-    '/chat',
-    async (url: string, { arg }: { arg: CreateChatArg }) => {
+    '/chat-model',
+    async (url: string, { arg }: { arg: CreateChatModelArg }) => {
       return fetch(import.meta.env.VITE_BACKEND_URL + url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: arg.title ?? 'new Conversation',
+          model: arg.model,
           owner: arg.owner,
+          chatId: arg.chatId,
         }),
       }).then((res) => res.json());
     },
   );
 
   return {
-    createChat: trigger,
+    createChatModel: trigger,
     isMutating,
   };
 }

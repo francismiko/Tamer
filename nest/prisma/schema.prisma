@@ -80,7 +80,7 @@ model ChatModel {
   create_at DateTime @default(now())
   update_at DateTime @updatedAt
   chat      Chat     @relation(fields: [chat_id], references: [id])
-  chat_id   String   @unique
+  chat_id   String   @unique @db.Uuid
 
   @@map("chat_model")
   @@schema("public")

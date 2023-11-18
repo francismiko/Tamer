@@ -9,9 +9,10 @@ export function Conversation(): JSX.Element {
   const { user } = useUser();
   const { id } = useParams();
   const { chat } = useChat(id);
+  const chatModel = chat?.chat_model;
   const { messages, mutate } = useMessages(id);
   const { createMessage, isMutating } = useCreateMessage();
-  const [inputValue, setInputValue] = useState<string | undefined>();
+  const [inputValue, setInputValue] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSubmitMessage = async (
@@ -19,29 +20,31 @@ export function Conversation(): JSX.Element {
   ) => {
     event.preventDefault();
     if (inputValue && id) {
-      setInputValue('');
-      mutate(
-        (prev) => [
-          ...(prev ?? []),
-          {
-            id: new Date().getTime().toString(),
-            content: inputValue,
-            status: 'Done',
-            sender: 'Human',
-            create_at: new Date(),
-          },
-          {
-            id: new Date().getTime().toString() + '1',
-            content: '',
-            status: 'Done',
-            sender: 'AI',
-            create_at: new Date(),
-          },
-        ],
+      const mockMessages: Message[] = [
         {
-          revalidate: false,
+          id: new Date().getTime().toString(),
+          content: inputValue,
+          status: 'Done',
+          sender: 'Human',
+          chat_id: id,
+          create_at: new Date(),
+          update_at: new Date(),
         },
-      );
+        {
+          id: new Date().getTime().toString() + '1',
+          content: '',
+          status: 'Done',
+          sender: 'AI',
+          chat_id: id,
+          create_at: new Date(),
+          update_at: new Date(),
+        },
+      ];
+      setInputValue('');
+
+      mutate((prev) => [...(prev ?? []), ...mockMessages], {
+        revalidate: false,
+      });
 
       const res = await createMessage({
         message: inputValue,
@@ -63,14 +66,12 @@ export function Conversation(): JSX.Element {
 
         mutate(
           (prev) => {
-            const newPrev = [...(prev ?? [])];
-            return [
-              ...newPrev.slice(0, -1),
-              {
-                ...newPrev.slice(-1)[0],
-                content: newPrev.slice(-1)[0].content + decodedChunk,
-              },
-            ];
+            const prevMsg = prev ?? [];
+            const newPrev = {
+              ...prevMsg.slice(-1)[0],
+              content: prevMsg.slice(-1)[0].content + decodedChunk,
+            };
+            return [...prevMsg.slice(0, -1), newPrev];
           },
           {
             revalidate: false,
@@ -90,7 +91,7 @@ export function Conversation(): JSX.Element {
     <div className="flex flex-col h-screen relative">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
         <div className="text-center">
-          <p className="font-bold">{chat?.chat_model}</p>
+          <p className="font-bold">{chatModel?.model}</p>
         </div>
       </div>
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
@@ -105,7 +106,7 @@ export function Conversation(): JSX.Element {
                       src={
                         msg.sender === 'Human'
                           ? user?.imageUrl
-                          : `/${chat?.chat_model}.svg`
+                          : `/${chatModel?.model}.svg`
                       }
                       draggable="false"
                     />
