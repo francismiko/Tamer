@@ -14,7 +14,7 @@ export function useCreateChat(): {
         },
         body: JSON.stringify({
           title: arg.title ?? 'new Conversation',
-          chat_model: arg.chatModel,
+          chatModel: arg.chatModel,
           owner: arg.owner,
         }),
       }).then((res) => res.json());

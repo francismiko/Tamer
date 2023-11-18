@@ -25,13 +25,21 @@ export class ChatService {
     });
   }
 
-  createChat(input: {
+  createChat({
+    owner,
+    title,
+    chatModel,
+  }: {
     owner: string;
     title: string;
-    chat_model: string;
+    chatModel: string;
   }): Promise<Chat> {
     return this.prisma.chat.create({
-      data: input,
+      data: {
+        owner,
+        title,
+        chat_model: chatModel,
+      },
     });
   }
 }
