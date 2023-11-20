@@ -7,7 +7,8 @@ import { Ripple, Sidenav, initTE } from 'tw-elements';
 
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
-  const { chats } = useChatsByOwner(user?.id);
+  const { id: owner } = user ?? {};
+  const { chats } = useChatsByOwner(owner);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | undefined>();
 
@@ -183,7 +184,7 @@ export function Sidebar(): JSX.Element {
       <ChatModal
         showModal={showModal}
         setShowModal={setShowModal}
-        owner={user?.id}
+        owner={owner}
       />
     </>
   );
