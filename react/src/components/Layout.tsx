@@ -17,7 +17,7 @@ export function Layout(): JSX.Element {
 
   if (!isLoaded) {
     return (
-      <main className="h-screen ">
+      <main className="h-screen">
         <Loading />
       </main>
     );

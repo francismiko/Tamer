@@ -32,18 +32,12 @@ export function ChatModal(props: ChatModalProps): JSX.Element {
     <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
       <TEModalDialog centered>
         <TEModalContent className="!bg-gray-700">
-          <ChatModalTitle
-            title={title}
-            setTitle={setTitle}
-            setShowModal={setShowModal}
-          />
+          <ChatModalTitle {...{ title, setTitle, setShowModal }} />
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
-          <ChatModalBody model={model} setModel={setModel} />
+          <ChatModalBody {...{ model, setModel }} />
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
           <ChatModalFooter
-            handleCreate={handleCreate}
-            isChatMutating={isChatMutating}
-            isChatModelMutating={isChatModelMutating}
+            {...{ handleCreate, isChatMutating, isChatModelMutating }}
           />
         </TEModalContent>
       </TEModalDialog>
@@ -94,30 +88,35 @@ function ChatModalBody(props: ChatModalBodyProps): JSX.Element {
   // TODO: use dynamic card
   const modelCards: ModelCard[] = [
     {
+      id: '1',
       iconUrl: '/gpt-3.5-turbo-1106.svg',
       model: 'gpt-3.5-turbo-1106',
       parameters: '175b',
       context: '4k',
     },
     {
+      id: '2',
       iconUrl: '/gpt4.svg',
       model: 'GPT-4',
       parameters: '1760b',
       context: '8k',
     },
     {
+      id: '3',
       iconUrl: '/meta.svg',
       model: 'Llama-2',
       parameters: '13b',
       context: '4k',
     },
     {
+      id: '4',
       iconUrl: '/claude.svg',
       model: 'Claude-2',
       parameters: '137b',
       context: '100k',
     },
     {
+      id: '5',
       iconUrl: '/chatglm.svg',
       model: 'ChatGLM',
       parameters: '6b',
@@ -127,9 +126,9 @@ function ChatModalBody(props: ChatModalBodyProps): JSX.Element {
 
   return (
     <TEModalBody className="grid grid-cols-1 px-6 md:grid-cols-2 gap-x-6 gap-y-4">
-      {modelCards.map((card, index) => (
+      {modelCards.map((card) => (
         <div
-          key={index}
+          key={card.id}
           className={`flex flex-col rounded-xl bg-white drop-shadow-xl dark:bg-[#3f495c] md:max-w-xl md:flex-row md:h-16 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer ${
             model === card.model && 'outline-none outline-white outline-3'
           }`}

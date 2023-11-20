@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 export function Conversation(): JSX.Element {
   const { user } = useUser();
+  const { imageUrl, fullName } = user ?? {};
   const { id: chatId } = useParams();
   const { chat } = useChat(chatId);
   const { model } = chat?.chat_model ?? {};
@@ -84,11 +85,29 @@ export function Conversation(): JSX.Element {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen relative">
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
-        <div className="text-center">
-          <p className="font-bold">{model}</p>
-        </div>
+    <main className="flex flex-col h-screen relative">
+      <ConversationContent
+        {...{ imageUrl, fullName, model, messages, scrollRef }}
+      />
+      <ConversationFooter
+        {...{
+          inputMessage,
+          handleSubmitMessage,
+          setInputMessage,
+          isMessageMutating,
+        }}
+      />
+    </main>
+  );
+}
+
+function ConversationContent(props: ConversationContentProps): JSX.Element {
+  const { imageUrl, fullName, model, messages, scrollRef } = props;
+
+  return (
+    <>
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl text-center">
+        <p className="font-bold">{model}</p>
       </div>
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
         {messages?.map(
@@ -99,15 +118,11 @@ export function Conversation(): JSX.Element {
                   <div className="mb-2 flex items-center">
                     <img
                       className="h-8 w-8 md:rounded-full"
-                      src={
-                        msg.sender === 'Human'
-                          ? user?.imageUrl
-                          : `/${model}.svg`
-                      }
+                      src={msg.sender === 'Human' ? imageUrl : `/${model}.svg`}
                       draggable="false"
                     />
                     {msg.sender === 'Human' && (
-                      <span className="ml-2">{user?.fullName}</span>
+                      <span className="ml-2">{fullName}</span>
                     )}
                   </div>
                   <p className="antialiased">{msg.content}</p>
@@ -116,19 +131,31 @@ export function Conversation(): JSX.Element {
             ),
         )}
       </div>
-      <form
-        onSubmit={handleSubmitMessage}
-        className="p-6 border-t border-slate-400 flex"
-      >
-        <input
-          type="text"
-          value={inputMessage}
-          placeholder="输入你的消息..."
-          className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
-          onChange={(e) => setInputMessage(e.target.value)}
-          disabled={isMessageMutating}
-        />
-      </form>
-    </div>
+    </>
+  );
+}
+
+function ConversationFooter(props: ConversationFooterProps): JSX.Element {
+  const {
+    inputMessage,
+    handleSubmitMessage,
+    setInputMessage,
+    isMessageMutating,
+  } = props;
+
+  return (
+    <form
+      onSubmit={handleSubmitMessage}
+      className="p-6 border-t border-slate-400 flex"
+    >
+      <input
+        type="text"
+        value={inputMessage}
+        placeholder="输入你的消息..."
+        className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
+        onChange={(e) => setInputMessage(e.target.value)}
+        disabled={isMessageMutating}
+      />
+    </form>
   );
 }

@@ -24,3 +24,32 @@ type ChatModalFooterProps = {
 type LoadingProps = {
   size?: string;
 };
+
+type SidebarBodyProps = ChatProps & ConversationListProps;
+
+type ChatProps = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type ConversationListProps = {
+  chats: Chat[] | undefined;
+  activeChat: number | undefined;
+  setActiveChat: React.Dispatch<React.SetStateAction<number | undefined>>;
+};
+
+type ConversationContentProps = {
+  imageUrl: string | undefined;
+  fullName: string | null | undefined;
+  model: string | undefined;
+  messages: Message[] | undefined;
+  scrollRef: React.RefObject<HTMLDivElement>;
+};
+
+type ConversationFooterProps = {
+  inputMessage: string;
+  isMessageMutating: boolean;
+  handleSubmitMessage: (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => Promise<void>;
+  setInputMessage: React.Dispatch<React.SetStateAction<string>>;
+};
