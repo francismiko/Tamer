@@ -8,9 +8,9 @@ export function Conversation(): JSX.Element {
   const { user } = useUser();
   const { id } = useParams();
   const { chat } = useChat(id);
-  const chatModel = chat?.chat_model;
+  const { model } = chat?.chat_model ?? {};
   const { messages, mutate } = useMessages(id);
-  const createMessage = useCreateMessage();
+  const { createMessage, isMessageMutating } = useCreateMessage();
   const [inputValue, setInputValue] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +45,7 @@ export function Conversation(): JSX.Element {
         revalidate: false,
       });
 
-      const res = await createMessage.trigger({
+      const res = await createMessage({
         message: inputValue,
         chatId: id,
       });
@@ -90,7 +90,7 @@ export function Conversation(): JSX.Element {
     <div className="flex flex-col h-screen relative">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl">
         <div className="text-center">
-          <p className="font-bold">{chatModel?.model}</p>
+          <p className="font-bold">{model}</p>
         </div>
       </div>
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
@@ -105,7 +105,7 @@ export function Conversation(): JSX.Element {
                       src={
                         msg.sender === 'Human'
                           ? user?.imageUrl
-                          : `/${chatModel?.model}.svg`
+                          : `/${model}.svg`
                       }
                       draggable="false"
                     />
@@ -129,7 +129,7 @@ export function Conversation(): JSX.Element {
           placeholder="输入你的消息..."
           className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
           onChange={(e) => setInputValue(e.target.value)}
-          disabled={createMessage.isMutating}
+          disabled={isMessageMutating}
         />
       </form>
     </div>

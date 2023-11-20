@@ -3,7 +3,7 @@ import useSWR, { KeyedMutator } from 'swr';
 export function useMessages(chatId: string | undefined): {
   messages: Message[] | undefined;
   isLoading: boolean;
-  isError: boolean;
+  isMessagesError: Error;
   mutate: KeyedMutator<Message[]>;
 } {
   const { data, error, isLoading, mutate } = useSWR<Message[]>(
@@ -13,7 +13,7 @@ export function useMessages(chatId: string | undefined): {
   return {
     messages: data,
     isLoading,
-    isError: error,
+    isMessagesError: error,
     mutate,
   };
 }
