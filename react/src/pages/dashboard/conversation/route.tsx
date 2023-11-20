@@ -6,26 +6,26 @@ import { useParams } from 'react-router-dom';
 
 export function Conversation(): JSX.Element {
   const { user } = useUser();
-  const { id } = useParams();
-  const { chat } = useChat(id);
+  const { id: chatId } = useParams();
+  const { chat } = useChat(chatId);
   const { model } = chat?.chat_model ?? {};
-  const { messages, mutate } = useMessages(id);
+  const { messages, mutate } = useMessages(chatId);
   const { createMessage, isMessageMutating } = useCreateMessage();
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputMessage, setInputMessage] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSubmitMessage = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
-    if (inputValue && id) {
+    if (inputMessage && chatId) {
       const mockMessages: Message[] = [
         {
           id: new Date().getTime().toString(),
-          content: inputValue,
+          content: inputMessage,
           status: 'Done',
           sender: 'Human',
-          chat_id: id,
+          chat_id: chatId,
           create_at: new Date(),
           update_at: new Date(),
         },
@@ -34,21 +34,18 @@ export function Conversation(): JSX.Element {
           content: '',
           status: 'Done',
           sender: 'AI',
-          chat_id: id,
+          chat_id: chatId,
           create_at: new Date(),
           update_at: new Date(),
         },
       ];
-      setInputValue('');
+      setInputMessage('');
 
       mutate((prev) => [...(prev ?? []), ...mockMessages], {
         revalidate: false,
       });
 
-      const res = await createMessage({
-        message: inputValue,
-        chatId: id,
-      });
+      const res = await createMessage({ message: inputMessage, chatId });
       const reader = res.body?.getReader();
       const textDecoder = new TextDecoder();
       if (!reader) return;
@@ -125,10 +122,10 @@ export function Conversation(): JSX.Element {
       >
         <input
           type="text"
-          value={inputValue}
+          value={inputMessage}
           placeholder="输入你的消息..."
           className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputMessage(e.target.value)}
           disabled={isMessageMutating}
         />
       </form>
