@@ -9,7 +9,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const bootstrap = async (): Promise<void> => {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { cors: true });
 
   const swaggerConf = new DocumentBuilder()
@@ -31,6 +31,6 @@ const bootstrap = async (): Promise<void> => {
   await app.listen(process.env.PORT ?? 8000);
 
   new Logger('Running').log(`🚀 Service is running on: ${await app.getUrl()}`);
-};
+}
 
 bootstrap();
