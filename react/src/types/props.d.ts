@@ -40,8 +40,7 @@ type ConversationListProps = {
   chats: Chat[] | undefined;
   activeChat: number | undefined;
   setActiveChat: React.Dispatch<React.SetStateAction<number | undefined>>;
-  handleDeleteChat: (ChatId: string) => Promise<void>;
-  handleUpdateChatTitle: () => Promise<void>;
+  setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ConversationContentProps = {
