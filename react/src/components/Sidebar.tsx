@@ -12,7 +12,9 @@ export function Sidebar(): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | undefined>();
 
-  const handleDeleteChat = async (): Promise<void> => {
+  const handleDeleteChat = async (chatId: string): Promise<void> => {
+    console.log(chatId);
+
     return;
   };
 
@@ -230,8 +232,8 @@ function ConversationList(props: ConversationListProps): JSX.Element {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="w-4 h-4 mr-1"
-                    onClick={handleDeleteChat}
+                    className="w-4 h-4 mr-2 transition-transform hover:scale-150"
+                    onClick={() => handleDeleteChat(id)}
                   >
                     <path
                       fillRule="evenodd"
@@ -243,7 +245,7 @@ function ConversationList(props: ConversationListProps): JSX.Element {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="w-4 h-4"
+                    className="w-4 h-4 transition-transform hover:scale-150"
                     onClick={handleUpdateChatTitle}
                   >
                     <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
