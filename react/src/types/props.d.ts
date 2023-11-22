@@ -22,6 +22,7 @@ type ChatModalFooterProps = {
 };
 
 type DeleteChatModalProps = {
+  chatId: string | undefined;
   showDeleteChatModal: boolean;
   setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };

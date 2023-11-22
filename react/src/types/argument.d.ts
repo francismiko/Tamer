@@ -13,3 +13,7 @@ type CreateMessageArg = {
   message: string;
   chatId: string;
 };
+
+type DeleteChatArg = {
+  chatId: string;
+};

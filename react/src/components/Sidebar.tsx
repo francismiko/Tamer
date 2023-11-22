@@ -4,7 +4,7 @@ import { UserButton, useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ripple, Sidenav, initTE } from 'tw-elements';
-import { DeleteChatModal } from './modals/deleteChatModal';
+import { DeleteChatModal } from './modals/DeleteChatModal';
 
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
@@ -12,6 +12,7 @@ export function Sidebar(): JSX.Element {
   const { chats } = useChatsByOwner(owner);
   const [showChatModal, setShowChatModal] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | undefined>();
+  const chatId = chats?.[activeChat ?? 0].id;
   const [showDeleteChatModal, setShowDeleteChatModal] =
     useState<boolean>(false);
 
@@ -43,7 +44,9 @@ export function Sidebar(): JSX.Element {
         <SidebarFooter />
       </nav>
       <ChatModal {...{ showChatModal, setShowChatModal, owner }} />
-      <DeleteChatModal {...{ showDeleteChatModal, setShowDeleteChatModal }} />
+      <DeleteChatModal
+        {...{ showDeleteChatModal, setShowDeleteChatModal, chatId }}
+      />
     </>
   );
 }

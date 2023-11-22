@@ -1,3 +1,4 @@
+import { useDeleteChat } from '@/hooks/useSWRMutation';
 import {
   TEModal,
   TEModalContent,
@@ -8,10 +9,14 @@ import {
 } from 'tw-elements-react';
 
 export function DeleteChatModal(props: DeleteChatModalProps): JSX.Element {
-  const { showDeleteChatModal, setShowDeleteChatModal } = props;
+  const { showDeleteChatModal, setShowDeleteChatModal, chatId } = props;
+  const { deleteChat } = useDeleteChat();
 
   const handleDeleteChat = async (): Promise<void> => {
-    // await deleteChat();
+    if (!chatId) return;
+    const res = await deleteChat({ chatId });
+    console.log({ res });
+
     setShowDeleteChatModal(false);
   };
 
