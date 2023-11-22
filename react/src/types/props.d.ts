@@ -21,6 +21,11 @@ type ChatModalFooterProps = {
   isChatModelMutating: boolean;
 };
 
+type DeleteChatModalProps = {
+  showDeleteChatModal: boolean;
+  setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 type LoadingProps = {
   size?: string;
 };
