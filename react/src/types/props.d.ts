@@ -35,6 +35,8 @@ type ConversationListProps = {
   chats: Chat[] | undefined;
   activeChat: number | undefined;
   setActiveChat: React.Dispatch<React.SetStateAction<number | undefined>>;
+  handleDeleteChat: () => Promise<void>;
+  handleUpdateChatTitle: () => Promise<void>;
 };
 
 type ConversationContentProps = {
