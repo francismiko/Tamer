@@ -14,7 +14,7 @@ import {
 } from 'tw-elements-react';
 
 export function ChatModal(props: ChatModalProps): JSX.Element {
-  const { showModal, setShowModal, owner } = props;
+  const { showChatModal, setShowChatModal, owner } = props;
   const { createChat, isChatMutating } = useCreateChat();
   const { createChatModel, isChatModelMutating } = useCreateChatModel();
   const navigate = useNavigate();
@@ -25,14 +25,14 @@ export function ChatModal(props: ChatModalProps): JSX.Element {
     const { id: chatId } = await createChat({ title, owner });
     await createChatModel({ model, owner, chatId });
     navigate(`/dashboard/conversation/${chatId}`);
-    setShowModal(false);
+    setShowChatModal(false);
   };
 
   return (
-    <TEModal show={showModal} setShow={setShowModal} staticBackdrop>
+    <TEModal show={showChatModal} setShow={setShowChatModal} staticBackdrop>
       <TEModalDialog centered>
         <TEModalContent className="!bg-gray-700">
-          <ChatModalTitle {...{ title, setTitle, setShowModal }} />
+          <ChatModalTitle {...{ title, setTitle, setShowChatModal }} />
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
           <ChatModalBody {...{ model, setModel }} />
           <hr className="h-px bg-transparent border-t-0 opacity-25 bg-gradient-to-r from-transparent via-neutral-500 to-transparent dark:opacity-100" />
@@ -46,7 +46,7 @@ export function ChatModal(props: ChatModalProps): JSX.Element {
 }
 
 function ChatModalTitle(props: ChatModalTitleProps): JSX.Element {
-  const { title, setTitle, setShowModal } = props;
+  const { title, setTitle, setShowChatModal } = props;
 
   return (
     <TEModalHeader className="!border-b-0">
@@ -60,7 +60,7 @@ function ChatModalTitle(props: ChatModalTitleProps): JSX.Element {
       <button
         type="button"
         className="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-        onClick={() => setShowModal(false)}
+        onClick={() => setShowChatModal(false)}
         aria-label="Close"
       >
         <svg

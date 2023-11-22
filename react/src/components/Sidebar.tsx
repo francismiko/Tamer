@@ -9,7 +9,7 @@ export function Sidebar(): JSX.Element {
   const { user } = useUser();
   const { id: owner } = user ?? {};
   const { chats } = useChatsByOwner(owner);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showChatModal, setShowChatModal] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | undefined>();
 
   const handleDeleteChat = async (chatId: string): Promise<void> => {
@@ -41,7 +41,7 @@ export function Sidebar(): JSX.Element {
         <SidebarBody
           {...{
             chats,
-            setShowModal,
+            setShowChatModal,
             activeChat,
             setActiveChat,
             handleDeleteChat,
@@ -50,7 +50,7 @@ export function Sidebar(): JSX.Element {
         />
         <SidebarFooter />
       </nav>
-      <ChatModal {...{ showModal, setShowModal, owner }} />
+      <ChatModal {...{ showChatModal, setShowChatModal, owner }} />
     </>
   );
 }
@@ -76,7 +76,7 @@ function SidebarHeader(): JSX.Element {
 function SidebarBody(props: SidebarBodyProps): JSX.Element {
   const {
     chats,
-    setShowModal,
+    setShowChatModal,
     activeChat,
     setActiveChat,
     handleDeleteChat,
@@ -92,7 +92,7 @@ function SidebarBody(props: SidebarBodyProps): JSX.Element {
         <span className="px-6 py-4 text-[0.6rem] font-bold uppercase text-gray-600 dark:text-gray-400">
           Core function
         </span>
-        <Chat {...{ setShowModal }} />
+        <Chat {...{ setShowChatModal }} />
       </li>
       <li className="relative">
         <ConversationList
@@ -135,11 +135,11 @@ function Overview(): JSX.Element {
 }
 
 function Chat(props: ChatProps): JSX.Element {
-  const { setShowModal } = props;
+  const { setShowChatModal } = props;
 
   return (
     <a
-      onClick={() => setShowModal(true)}
+      onClick={() => setShowChatModal(true)}
       className="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-gray-600 outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none dark:text-gray-300 dark:hover:bg-white/10 dark:focus:bg-white/10 dark:active:bg-white/10"
       data-te-sidenav-link-ref
       data-te-ripple-init

@@ -1,13 +1,13 @@
 type ChatModalProps = {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showChatModal: boolean;
+  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
   owner: string | undefined;
 };
 
 type ChatModalTitleProps = {
   title: string | undefined;
   setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ChatModalBodyProps = {
@@ -33,7 +33,7 @@ type LoadingProps = {
 type SidebarBodyProps = ChatProps & ConversationListProps;
 
 type ChatProps = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ConversationListProps = {
