@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { Chat } from '@prisma/client';
 import { ChatService } from './chat.service';
 
@@ -19,5 +27,10 @@ export class ChatController {
   @Post()
   createChat(@Body() body: { owner: string; title: string }): Promise<Chat> {
     return this.chatService.createChat(body);
+  }
+
+  @Delete(':id')
+  deleteChat(@Param('id') id: string): Promise<Chat | null> {
+    return this.chatService.deleteChat(id);
   }
 }

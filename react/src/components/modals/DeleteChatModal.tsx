@@ -9,14 +9,14 @@ import {
 } from 'tw-elements-react';
 
 export function DeleteChatModal(props: DeleteChatModalProps): JSX.Element {
-  const { showDeleteChatModal, setShowDeleteChatModal, chatId } = props;
+  const { showDeleteChatModal, setShowDeleteChatModal, chatId, chatsMutate } =
+    props;
   const { deleteChat } = useDeleteChat();
 
   const handleDeleteChat = async (): Promise<void> => {
     if (!chatId) return;
-    const res = await deleteChat({ chatId });
-    console.log({ res });
-
+    await deleteChat({ chatId });
+    chatsMutate();
     setShowDeleteChatModal(false);
   };
 

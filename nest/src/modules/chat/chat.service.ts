@@ -42,4 +42,10 @@ export class ChatService {
       },
     });
   }
+
+  deleteChat(id: string): Promise<Chat | null> {
+    return this.prisma.chat.delete({
+      where: { id },
+    });
+  }
 }

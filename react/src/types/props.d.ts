@@ -2,6 +2,7 @@ type ChatModalProps = {
   showChatModal: boolean;
   setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
   owner: string | undefined;
+  chatsMutate: KeyedMutator<Chat[]>;
 };
 
 type ChatModalTitleProps = {
@@ -25,6 +26,7 @@ type DeleteChatModalProps = {
   chatId: string | undefined;
   showDeleteChatModal: boolean;
   setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+  chatsMutate: KeyedMutator<Chat[]>;
 };
 
 type LoadingProps = {

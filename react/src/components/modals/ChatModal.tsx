@@ -14,7 +14,7 @@ import {
 } from 'tw-elements-react';
 
 export function ChatModal(props: ChatModalProps): JSX.Element {
-  const { showChatModal, setShowChatModal, owner } = props;
+  const { showChatModal, setShowChatModal, owner, chatsMutate } = props;
   const { createChat, isChatMutating } = useCreateChat();
   const { createChatModel, isChatModelMutating } = useCreateChatModel();
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ export function ChatModal(props: ChatModalProps): JSX.Element {
   const handleCreate = async () => {
     const { id: chatId } = await createChat({ title, owner });
     await createChatModel({ model, owner, chatId });
+    chatsMutate();
     navigate(`/dashboard/conversation/${chatId}`);
     setShowChatModal(false);
   };

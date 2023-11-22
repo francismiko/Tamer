@@ -9,10 +9,10 @@ import { DeleteChatModal } from './modals/DeleteChatModal';
 export function Sidebar(): JSX.Element {
   const { user } = useUser();
   const { id: owner } = user ?? {};
-  const { chats } = useChatsByOwner(owner);
+  const { chats, chatsMutate } = useChatsByOwner(owner);
   const [showChatModal, setShowChatModal] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | undefined>();
-  const chatId = chats?.[activeChat ?? 0].id;
+  const chatId = chats?.[activeChat ?? 0]?.id;
   const [showDeleteChatModal, setShowDeleteChatModal] =
     useState<boolean>(false);
 
@@ -43,9 +43,14 @@ export function Sidebar(): JSX.Element {
         />
         <SidebarFooter />
       </nav>
-      <ChatModal {...{ showChatModal, setShowChatModal, owner }} />
+      <ChatModal {...{ showChatModal, setShowChatModal, owner, chatsMutate }} />
       <DeleteChatModal
-        {...{ showDeleteChatModal, setShowDeleteChatModal, chatId }}
+        {...{
+          showDeleteChatModal,
+          setShowDeleteChatModal,
+          chatId,
+          chatsMutate,
+        }}
       />
     </>
   );

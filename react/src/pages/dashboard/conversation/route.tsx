@@ -10,7 +10,7 @@ export function Conversation(): JSX.Element {
   const { id: chatId } = useParams();
   const { chat } = useChat(chatId);
   const { model } = chat?.chat_model ?? {};
-  const { messages, mutate } = useMessages(chatId);
+  const { messages, messagesMutate } = useMessages(chatId);
   const { createMessage, isMessageMutating } = useCreateMessage();
   const [inputMessage, setInputMessage] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export function Conversation(): JSX.Element {
       ];
       setInputMessage('');
 
-      mutate((prev) => [...(prev ?? []), ...mockMessages], {
+      messagesMutate((prev) => [...(prev ?? []), ...mockMessages], {
         revalidate: false,
       });
 
@@ -61,7 +61,7 @@ export function Conversation(): JSX.Element {
           .map((line) => line.trim().split('\n')[1]?.slice(6))
           .join('');
 
-        mutate(
+        messagesMutate(
           (prev) => {
             const prevMsg = prev ?? [];
             const newPrev = {

@@ -4,7 +4,7 @@ export function useMessages(chatId: string | undefined): {
   messages: Message[] | undefined;
   isLoading: boolean;
   isMessagesError: Error;
-  mutate: KeyedMutator<Message[]>;
+  messagesMutate: KeyedMutator<Message[]>;
 } {
   const { data, error, isLoading, mutate } = useSWR<Message[]>(
     `/message?chat_id=${chatId}`,
@@ -14,6 +14,6 @@ export function useMessages(chatId: string | undefined): {
     messages: data,
     isLoading,
     isMessagesError: error,
-    mutate,
+    messagesMutate: mutate,
   };
 }
