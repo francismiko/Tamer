@@ -90,8 +90,8 @@ function ChatModalBody(props: ChatModalBodyProps): JSX.Element {
   const modelCards: ModelCard[] = [
     {
       id: '1',
-      iconUrl: '/gpt-3.5-turbo-1106.svg',
-      model: 'gpt-3.5-turbo-1106',
+      iconUrl: '/gpt-3.5-turbo.svg',
+      model: 'gpt-3.5-turbo',
       parameters: '175b',
       context: '4k',
     },
