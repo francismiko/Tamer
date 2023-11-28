@@ -30,14 +30,18 @@ export class MessageService {
       select: { model: true },
     });
 
-    return new ChatOpenAI({
-      openAIApiKey: process.env.OPENAI_API_KEY,
-      configuration: { baseURL: process.env.OPENAI_API_PROXY_URL },
-      modelName: chatModel?.model,
-      temperature: 1,
-      timeout: 5 * 1000,
-      streaming: true,
-    });
+    return new ChatOpenAI(
+      {
+        openAIApiKey: process.env.OPENAI_API_KEY,
+        modelName: chatModel?.model,
+        temperature: 1,
+        timeout: 5 * 1000,
+        streaming: true,
+      },
+      {
+        baseURL: process.env.OPENAI_API_PROXY_URL,
+      },
+    );
   }
 
   async generateModelStream(
