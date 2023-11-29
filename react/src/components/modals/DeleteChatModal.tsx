@@ -1,4 +1,5 @@
 import { useDeleteChat } from '@/hooks/useSWRMutation';
+import { useNavigate } from 'react-router-dom';
 import {
   TEModal,
   TEModalContent,
@@ -12,12 +13,14 @@ export function DeleteChatModal(props: DeleteChatModalProps): JSX.Element {
   const { showDeleteChatModal, setShowDeleteChatModal, chatId, chatsMutate } =
     props;
   const { deleteChat } = useDeleteChat();
+  const navigate = useNavigate();
 
   const handleDeleteChat = async (): Promise<void> => {
     if (!chatId) return;
     await deleteChat({ chatId });
     chatsMutate();
     setShowDeleteChatModal(false);
+    navigate('/dashboard');
   };
 
   return (
