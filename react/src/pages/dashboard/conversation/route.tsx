@@ -58,7 +58,7 @@ export function Conversation(): JSX.Element {
         const decodedChunk = textDecoder
           .decode(value, { stream: true })
           .split('\n\n')
-          .map((line) => line.trim().split('\n')[1]?.slice(6))
+          .map((line) => line.match(/data: "(.*)"/)?.[1] || '')
           .join('');
 
         messagesMutate(
@@ -125,7 +125,7 @@ function ConversationContent(props: ConversationContentProps): JSX.Element {
                       <span className="ml-2">{fullName}</span>
                     )}
                   </div>
-                  <p className="antialiased">{msg.content}</p>
+                  <span className="antialiased">{msg.content}</span>
                 </div>
               </div>
             ),

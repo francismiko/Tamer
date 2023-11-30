@@ -4,7 +4,7 @@ import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { BaseChatModel } from 'langchain/dist/chat_models/base';
 import { IterableReadableStream } from 'langchain/dist/util/stream';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
-import { HumanMessage } from 'langchain/schema';
+import { ChatPromptTemplate } from 'langchain/prompts';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
@@ -44,6 +44,21 @@ export class MessageService {
     );
   }
 
+  // async modelChain(chatModel: BaseChatModel): Promise<void> {
+  // const systemTemplate =
+  //   'You are a helpful assistant that translates {input_language} to {output_language}.';
+  // const humanTemplate = '{text}';
+  // const chatPrompt = ChatPromptTemplate.fromMessages([
+  //   ['system', systemTemplate],
+  //   ['human', humanTemplate],
+  // ]);
+  // const formattedChatPrompt = await chatPrompt.formatMessages({
+  //   input_language: 'English',
+  //   output_language: 'French',
+  //   text: 'I love programming.',
+  // });
+  // }
+
   async generateModelStream(
     chatModel: BaseChatModel,
     message: string,
@@ -52,9 +67,28 @@ export class MessageService {
       contentType: 'text/event-stream',
     });
 
-    const stream = await chatModel
-      .pipe(parser)
-      .stream([new HumanMessage(message)]);
+    const systemTemplate = `你是一名辅助用户自学的英语教授, 负责回答学生问题以及根据要求给他出题
+    他想达到的英语水平是:{level},
+    结合现有的真题, 按照如下的话术给他出题:
+    1. 题目难度等级:<{level}>
+    2. 题目类型:
+    3. 题目内容:
+    4. 题目答案:
+    请给出你的回答:
+    `;
+    const humanTemplate = '{text}';
+
+    const chatPrompt = ChatPromptTemplate.fromMessages([
+      ['system', systemTemplate],
+      ['human', humanTemplate],
+    ]);
+
+    const formattedChatPrompt = await chatPrompt.formatMessages({
+      level: 'CET-4',
+      text: message,
+    });
+
+    const stream = await chatModel.pipe(parser).stream(formattedChatPrompt);
 
     return stream;
   }
@@ -65,7 +99,7 @@ export class MessageService {
         new TextDecoder()
           .decode(chunk, { stream: true })
           .split('\n\n')
-          .map((line) => line.trim().split('\n')[1]?.slice(6))
+          .map((line) => line.match(/data: "(.*)"/)?.[1] || '')
           .join(''),
       )
       .join('');
