@@ -47,16 +47,9 @@ export class MessageController {
 
     res.end();
 
-    const combinedBuffer = Buffer.concat(
-      chunks.map((chunk) => Buffer.from(chunk)),
-    );
-    const AIMessage = combinedBuffer.toString('utf8');
-
-    console.log(AIMessage); // 在服务器端输出解码后的字符串
-
     await this.messageService.createChatMessages({
       humanMessage: message,
-      AIMessage,
+      AIMessage: Buffer.concat(chunks).toString(),
       chatId,
     });
   }
