@@ -119,7 +119,9 @@ function ConversationContent(props: ConversationContentProps): JSX.Element {
                       <span className="ml-2">{fullName}</span>
                     )}
                   </div>
-                  <span className="antialiased">{msg.content}</span>
+                  <span className="whitespace-pre-wrap antialiased">
+                    {msg.content}
+                  </span>
                 </div>
               </div>
             ),
