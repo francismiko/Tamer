@@ -47,26 +47,20 @@ export function Conversation(): JSX.Element {
       });
 
       const res = await createMessage({ message: inputMessage, chatId });
-      const reader = res.body?.getReader();
-      const textDecoder = new TextDecoder();
+      const reader = res.body?.pipeThrough(new TextDecoderStream()).getReader();
+
       if (!reader) return;
 
       for (;;) {
         const { done, value } = await reader.read();
         if (done) return;
 
-        const decodedChunk = textDecoder
-          .decode(value, { stream: true })
-          .split('\n\n')
-          .map((line) => line.match(/data: "(.*)"/)?.[1] || '')
-          .join('');
-
         messagesMutate(
           (prev) => {
             const prevMsg = prev ?? [];
             const newPrev = {
               ...prevMsg.slice(-1)[0],
-              content: prevMsg.slice(-1)[0].content + decodedChunk,
+              content: prevMsg.slice(-1)[0].content + value,
             };
             return [...prevMsg.slice(0, -1), newPrev];
           },

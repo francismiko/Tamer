@@ -63,9 +63,7 @@ export class MessageService {
     chatModel: BaseChatModel,
     message: string,
   ): Promise<IterableReadableStream<Uint8Array>> {
-    const parser = new HttpResponseOutputParser({
-      contentType: 'text/event-stream',
-    });
+    const parser = new HttpResponseOutputParser();
 
     const systemTemplate = `你是一名辅助用户自学的英语教授, 负责回答学生问题以及根据要求给他出题
     他想达到的英语水平是:{level},
@@ -91,18 +89,6 @@ export class MessageService {
     const stream = await chatModel.pipe(parser).stream(formattedChatPrompt);
 
     return stream;
-  }
-
-  streamDecode(chunks: Uint8Array[]): string {
-    return chunks
-      .map((chunk) =>
-        new TextDecoder()
-          .decode(chunk, { stream: true })
-          .split('\n\n')
-          .map((line) => line.match(/data: "(.*)"/)?.[1] || '')
-          .join(''),
-      )
-      .join('');
   }
 
   async createChatMessages({

@@ -45,14 +45,19 @@ export class MessageController {
       res.write(chunk);
     }
 
-    const AIMessage = this.messageService.streamDecode(chunks);
+    res.end();
+
+    const combinedBuffer = Buffer.concat(
+      chunks.map((chunk) => Buffer.from(chunk)),
+    );
+    const AIMessage = combinedBuffer.toString('utf8');
+
+    console.log(AIMessage); // 在服务器端输出解码后的字符串
 
     await this.messageService.createChatMessages({
       humanMessage: message,
       AIMessage,
       chatId,
     });
-
-    setImmediate(() => res.end());
   }
 }
