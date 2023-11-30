@@ -48,7 +48,6 @@ type ConversationListProps = {
 
 type ConversationContentProps = {
   imageUrl: string | undefined;
-  fullName: string | null | undefined;
   model: string | undefined;
   messages: Message[] | undefined;
   scrollRef: React.RefObject<HTMLDivElement>;

@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 
 export function Conversation(): JSX.Element {
   const { user } = useUser();
-  const { imageUrl, fullName } = user ?? {};
+  const { imageUrl } = user ?? {};
   const { id: chatId } = useParams();
   const { chat } = useChat(chatId);
   const { model } = chat?.chat_model ?? {};
@@ -82,9 +82,7 @@ export function Conversation(): JSX.Element {
 
   return (
     <main className="flex flex-col h-screen relative">
-      <ConversationContent
-        {...{ imageUrl, fullName, model, messages, scrollRef }}
-      />
+      <ConversationContent {...{ imageUrl, model, messages, scrollRef }} />
       <ConversationFooter
         {...{
           inputMessage,
@@ -98,28 +96,26 @@ export function Conversation(): JSX.Element {
 }
 
 function ConversationContent(props: ConversationContentProps): JSX.Element {
-  const { imageUrl, fullName, model, messages, scrollRef } = props;
+  const { imageUrl, model, messages, scrollRef } = props;
 
   return (
     <>
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 p-1 bg-white/30 backdrop-blur-sm z-10 rounded-bl-xl rounded-br-xl text-center">
-        <p className="font-bold">{model}</p>
-      </div>
+      <span className="absolute left-4 top-4 inset-0 flex justify-center items-center w-36 h-12 p-1 bg-primary-100 backdrop-blur-sm z-10 rounded-md text-center whitespace-nowrap px-[0.65em] pb-[0.25em] pt-[0.35em] align-baseline text-xl font-bold leading-none text-gray-900">
+        {model}
+      </span>
+
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
         {messages?.map(
           (msg) =>
             msg.status === 'Done' && (
-              <div key={msg.id} className="pb-5 my-5">
+              <div key={msg.id} className="pb-4 mb-2">
                 <div className="w-3/5 mx-auto">
-                  <div className="mb-2 flex items-center">
+                  <div className="relative inline-block right-12 top-8 items-center">
                     <img
-                      className="h-8 w-8 md:rounded-full"
+                      className="h-8 w-8 rounded-full"
                       src={msg.sender === 'Human' ? imageUrl : `/${model}.svg`}
                       draggable="false"
                     />
-                    {msg.sender === 'Human' && (
-                      <span className="ml-2">{fullName}</span>
-                    )}
                   </div>
                   <Markdown
                     remarkPlugins={[remarkGfm]}
@@ -147,13 +143,33 @@ function ConversationFooter(props: ConversationFooterProps): JSX.Element {
   return (
     <form
       onSubmit={handleSubmitMessage}
-      className="p-6 border-t border-slate-400 flex"
+      className="flex items-center justify-between px-2 py-6 md:px-10"
     >
+      <div className="flex w-1/5 absolute space-x-3">
+        <button
+          type="button"
+          className="inline-block rounded-md w-1/4 h-6 bg-info text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
+        >
+          单词
+        </button>
+        <button
+          type="button"
+          className="inline-block rounded-md w-1/4 h-6 bg-info text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
+        >
+          翻译
+        </button>
+        <button
+          type="button"
+          className="inline-block rounded-md w-1/4 h-6 bg-info text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
+        >
+          阅读
+        </button>
+      </div>
       <input
         type="text"
         value={inputMessage}
         placeholder="输入你的消息..."
-        className="w-3/5 p-4 bg-slate-600 rounded-lg focus:outline outline-gray-400 mx-auto"
+        className="w-3/5 w p-4 bg-slate-600 rounded-lg focus:outline-none outline-gray-400 mx-auto"
         onChange={(e) => setInputMessage(e.target.value)}
         disabled={isMessageMutating}
       />

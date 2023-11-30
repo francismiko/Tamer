@@ -34,7 +34,7 @@ export class MessageService {
       {
         openAIApiKey: process.env.OPENAI_API_KEY,
         modelName: chatModel?.model,
-        temperature: 0,
+        temperature: 0.5,
         timeout: 5 * 1000,
         streaming: true,
       },
@@ -50,9 +50,11 @@ export class MessageService {
   ): Promise<IterableReadableStream<Uint8Array>> {
     const parser = new HttpResponseOutputParser();
 
-    const systemTemplate = `你是一名辅助用户自学的英语教授, 负责回答学生问题以及根据要求给他出题
-    他想达到的英语水平是:{level},
-    结合现有的真题,按照如下的话术给他出题:
+    const systemTemplate = `
+    你是一名来自中国的英语老师,擅长帮助学生准备大学英语四级、六级、雅思、托福等各类英语考试;
+    使用例句帮助学生强化记忆词汇,根据现有考试格式生成新的试题,并提供正确答案;
+    <所有的回答和交流用中文,题目用英文生成>
+    用户的英语水平:{level};
     `;
     const humanTemplate = '{text}';
 
