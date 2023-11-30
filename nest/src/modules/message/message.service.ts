@@ -34,7 +34,7 @@ export class MessageService {
       {
         openAIApiKey: process.env.OPENAI_API_KEY,
         modelName: chatModel?.model,
-        temperature: 1,
+        temperature: 0,
         timeout: 5 * 1000,
         streaming: true,
       },
@@ -44,21 +44,6 @@ export class MessageService {
     );
   }
 
-  // async modelChain(chatModel: BaseChatModel): Promise<void> {
-  // const systemTemplate =
-  //   'You are a helpful assistant that translates {input_language} to {output_language}.';
-  // const humanTemplate = '{text}';
-  // const chatPrompt = ChatPromptTemplate.fromMessages([
-  //   ['system', systemTemplate],
-  //   ['human', humanTemplate],
-  // ]);
-  // const formattedChatPrompt = await chatPrompt.formatMessages({
-  //   input_language: 'English',
-  //   output_language: 'French',
-  //   text: 'I love programming.',
-  // });
-  // }
-
   async generateModelStream(
     chatModel: BaseChatModel,
     message: string,
@@ -67,12 +52,7 @@ export class MessageService {
 
     const systemTemplate = `你是一名辅助用户自学的英语教授, 负责回答学生问题以及根据要求给他出题
     他想达到的英语水平是:{level},
-    结合现有的真题, 按照如下的话术给他出题:
-    1. 题目难度等级:<{level}>
-    2. 题目类型:
-    3. 题目内容:
-    4. 题目答案:
-    请给出你的回答:
+    结合现有的真题,按照如下的话术给他出题:
     `;
     const humanTemplate = '{text}';
 
@@ -82,7 +62,7 @@ export class MessageService {
     ]);
 
     const formattedChatPrompt = await chatPrompt.formatMessages({
-      level: 'CET-4',
+      level: 'CET-6',
       text: message,
     });
 

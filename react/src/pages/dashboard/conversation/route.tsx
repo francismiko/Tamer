@@ -2,7 +2,9 @@ import { useChat, useMessages } from '@/hooks/useSWR';
 import { useCreateMessage } from '@/hooks/useSWRMutation';
 import { useUser } from '@clerk/clerk-react';
 import { useEffect, useRef, useState } from 'react';
+import Markdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
+import remarkGfm from 'remark-gfm';
 
 export function Conversation(): JSX.Element {
   const { user } = useUser();
@@ -119,9 +121,12 @@ function ConversationContent(props: ConversationContentProps): JSX.Element {
                       <span className="ml-2">{fullName}</span>
                     )}
                   </div>
-                  <span className="whitespace-pre-wrap antialiased">
+                  <Markdown
+                    remarkPlugins={[remarkGfm]}
+                    className="whitespace-pre-wrap"
+                  >
                     {msg.content}
-                  </span>
+                  </Markdown>
                 </div>
               </div>
             ),

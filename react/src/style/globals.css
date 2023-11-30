@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   html {
@@ -8,7 +10,66 @@
     @apply text-neutral-50;
     @apply bg-slate-700;
   }
-}
 
-@tailwind components;
-@tailwind utilities;
+  p {
+    @apply antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply antialiased mb-2 mt-0 font-medium leading-tight;
+  }
+
+  h1 {
+    @apply text-5xl;
+  }
+
+  h2 {
+    @apply text-4xl;
+  }
+
+  h3 {
+    @apply text-3xl;
+  }
+
+  h4 {
+    @apply text-2xl;
+  }
+
+  h5 {
+    @apply text-xl;
+  }
+
+  h6 {
+    @apply text-base;
+  }
+
+  table {
+    @apply min-w-full text-sm font-light;
+  }
+
+  thead {
+    @apply border-b bg-teal-600 text-white;
+  }
+
+  tbody {
+    @apply divide-y divide-x dark:divide-blue-300;
+  }
+
+  th,
+  td {
+    @apply px-4 py-4 text-left border;
+  }
+
+  th {
+    @apply font-medium;
+  }
+
+  td {
+    @apply font-normal;
+  }
+}
