@@ -19,7 +19,7 @@ export function ChatModal(props: ChatModalProps): JSX.Element {
   const { createChatModel, isChatModelMutating } = useCreateChatModel();
   const navigate = useNavigate();
   const [title, setTitle] = useState<string | undefined>();
-  const [model, setModel] = useState<string>('gpt-3.5-turbo-1106');
+  const [model, setModel] = useState<string>('gpt-3.5-turbo');
 
   const handleCreate = async () => {
     const { id: chatId } = await createChat({ title, owner });

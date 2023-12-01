@@ -58,7 +58,7 @@ export function Hero(): JSX.Element {
               data-te-collapse-item
             >
               <ul
-                className="flex flex-col pl-0 mr-auto list-style-none lg:mt-0 lg:flex-row"
+                className="flex flex-col list-none pl-0 mr-auto list-style-none lg:mt-0 lg:flex-row"
                 data-te-navbar-nav-ref
               >
                 <li

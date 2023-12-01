@@ -11,8 +11,24 @@
     @apply bg-slate-700;
   }
 
+  ul {
+    @apply list-disc list-outside;
+  }
+
+  ol {
+    @apply list-decimal list-outside;
+  }
+
+  li::marker {
+    @apply text-neutral-400;
+  }
+
+  li {
+    @apply whitespace-normal;
+  }
+
   p {
-    @apply antialiased;
+    @apply m-0 p-0 whitespace-pre-wrap;
   }
 
   h1,
@@ -20,8 +36,10 @@
   h3,
   h4,
   h5,
-  h6 {
-    @apply antialiased mb-2 mt-0 font-medium leading-tight;
+  h6,
+  th,
+  td {
+    @apply mb-2 mt-0 leading-tight;
   }
 
   h1 {
@@ -62,14 +80,25 @@
 
   th,
   td {
-    @apply px-4 py-2 text-left border;
+    @apply text-left border;
   }
 
   th {
-    @apply font-medium;
+    @apply px-2 py-2 font-medium whitespace-nowrap;
   }
 
   td {
-    @apply font-normal;
+    @apply px-2 py-4 font-normal;
+  }
+
+  p,
+  li,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply antialiased;
   }
 }

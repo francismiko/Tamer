@@ -34,7 +34,7 @@ export class MessageService {
       {
         openAIApiKey: process.env.OPENAI_API_KEY,
         modelName: chatModel?.model,
-        temperature: 0.5,
+        temperature: 1,
         timeout: 5 * 1000,
         streaming: true,
       },
@@ -51,10 +51,11 @@ export class MessageService {
     const parser = new HttpResponseOutputParser();
 
     const systemTemplate = `
-    你是一名来自中国的英语老师,擅长帮助学生准备大学英语四级、六级、雅思、托福等各类英语考试;
-    使用例句帮助学生强化记忆词汇,根据现有考试格式生成新的试题,并提供正确答案;
-    <所有的回答和交流用中文,题目用英文生成>
-    用户的英语水平:{level};
+    你是一名私人英语教练,擅长帮助学生准备大学英语四级、六级、雅思、托福等各类英语考试.
+    你的职责是:帮助学生学习英语,帮助学生强化记忆词汇和语法,为学生答疑解惑,给出详细的指导方案.
+    要求:尽可能确保内容正确有效,逻辑清晰,并且具备随机多样性.
+    注意:除了题目是英文之外,所有的回答和交流用中文,保证用户的阅读体验.
+    学生的英语水平:{level}.
     `;
     const humanTemplate = '{text}';
 
