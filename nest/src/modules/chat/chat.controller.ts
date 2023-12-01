@@ -7,7 +7,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { Chat } from '@prisma/client';
+import type { Chat } from '@prisma/client';
 import { ChatService } from './chat.service';
 
 @Controller('chat')

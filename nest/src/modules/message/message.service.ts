@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@prisma/client';
+import type { Message } from '@prisma/client';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { BaseChatModel } from 'langchain/dist/chat_models/base';
-import { IterableReadableStream } from 'langchain/dist/util/stream';
+import type { BaseChatModel } from 'langchain/dist/chat_models/base';
+import type { IterableReadableStream } from 'langchain/dist/util/stream';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { ChatPromptTemplate } from 'langchain/prompts';
 import { PrismaService } from 'nestjs-prisma';

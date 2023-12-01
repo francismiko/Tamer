@@ -8,8 +8,8 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
-import { Message } from '@prisma/client';
-import { Response } from 'express';
+import type { Message } from '@prisma/client';
+import type { Response } from 'express';
 import { MessageService } from './message.service';
 
 @Controller('message')
