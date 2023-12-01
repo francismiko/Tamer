@@ -1,6 +1,6 @@
 export function Loading(props: LoadingProps): JSX.Element {
   const { size = 'xl' } = props;
-  const sizeStyles: { [key: string]: string } = {
+  const sizeStyles: Record<string, string> = {
     sm: 'h-3 w-3',
     md: 'h-4 w-4',
     lg: 'h-6 w-6',
