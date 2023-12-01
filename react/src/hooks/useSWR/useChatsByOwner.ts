@@ -1,4 +1,5 @@
-import useSWR, { KeyedMutator } from 'swr';
+import type { KeyedMutator } from 'swr';
+import useSWR from 'swr';
 
 export function useChatsByOwner(owner: string | undefined): {
   chats: Chat[] | undefined;

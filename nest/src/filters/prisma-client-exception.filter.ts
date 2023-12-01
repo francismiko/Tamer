@@ -1,4 +1,5 @@
-import { ArgumentsHost, Catch, HttpStatus, Logger } from '@nestjs/common';
+import type { ArgumentsHost } from '@nestjs/common';
+import { Catch, HttpStatus, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import type { Response } from 'express';
@@ -57,6 +58,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       P2034: HttpStatus.INTERNAL_SERVER_ERROR,
     };
 
-    return exceptionCodes[code] ?? HttpStatus.INTERNAL_SERVER_ERROR;
+    return exceptionCodes[code] || HttpStatus.INTERNAL_SERVER_ERROR;
   }
 }
