@@ -35,10 +35,7 @@ export class MessageController {
     const { message, chatId } = body;
     const chunks: Uint8Array[] = [];
     const chatModel = await this.messageService.useChatModel(chatId);
-    const stream = await this.messageService.generateModelStream(
-      chatModel,
-      message,
-    );
+    const stream = await this.messageService.generateStream(chatModel, message);
 
     for await (const chunk of stream) {
       chunks.push(chunk);

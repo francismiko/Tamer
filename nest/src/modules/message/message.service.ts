@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { Message } from '@prisma/client';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import type { BaseChatModel } from 'langchain/dist/chat_models/base';
+import type { BaseMessage } from 'langchain/dist/schema';
 import type { IterableReadableStream } from 'langchain/dist/util/stream';
 import { HttpResponseOutputParser } from 'langchain/output_parsers';
 import { ChatPromptTemplate } from 'langchain/prompts';
@@ -44,32 +45,15 @@ export class MessageService {
     );
   }
 
-  async generateModelStream(
+  async generateStream(
     chatModel: BaseChatModel,
     message: string,
   ): Promise<IterableReadableStream<Uint8Array>> {
-    const parser = new HttpResponseOutputParser();
+    const httpParser = new HttpResponseOutputParser();
 
-    const systemTemplate = `
-    你是一名私人英语教练,擅长帮助学生准备大学英语四级、六级、雅思、托福等各类英语考试.
-    你的职责是:帮助学生学习英语,帮助学生强化记忆词汇和语法,为学生答疑解惑,给出详细的指导方案.
-    要求:尽可能确保内容正确有效,逻辑清晰,并且具备随机多样性.
-    注意:除了题目是英文之外,所有的回答和交流用中文,保证用户的阅读体验.
-    学生的英语水平:{level}.
-    `;
-    const humanTemplate = '{text}';
+    const prompt = await this.formatChatPrompt(message);
 
-    const chatPrompt = ChatPromptTemplate.fromMessages([
-      ['system', systemTemplate],
-      ['human', humanTemplate],
-    ]);
-
-    const formattedChatPrompt = await chatPrompt.formatMessages({
-      level: 'CET-6',
-      text: message,
-    });
-
-    const stream = await chatModel.pipe(parser).stream(formattedChatPrompt);
+    const stream = await chatModel.pipe(httpParser).stream(prompt);
 
     return stream;
   }
@@ -100,5 +84,26 @@ export class MessageService {
         chat_id: chatId,
       },
     });
+  }
+
+  private async formatChatPrompt(message: string): Promise<BaseMessage[]> {
+    const systemTemplate = `
+    你是一名私人英语教练,擅长帮助学生准备大学英语四级、六级、雅思、托福等各类英语考试.
+    你的职责是:帮助学生学习英语,帮助学生强化记忆词汇和语法,为学生答疑解惑,给出详细的指导方案.
+    要求:尽可能确保内容正确有效,逻辑清晰,并且具备随机多样性.
+    注意:除了题目是英文之外,所有的回答和交流用中文,保证用户的阅读体验.
+    学生的英语水平:{level}.
+    `;
+
+    const chatPrompt = ChatPromptTemplate.fromMessages([
+      ['system', systemTemplate],
+      ['human', message],
+    ]);
+
+    const formattedChatPrompt = await chatPrompt.formatMessages({
+      level: 'CET-6',
+    });
+
+    return formattedChatPrompt;
   }
 }
