@@ -27,15 +27,14 @@ export class MessageController {
   }
 
   @Post()
-  @Header('Content-Type', 'text/event-stream')
+  @Header('Content-Type', 'text/plain')
   async generateAIMessage(
     @Res() res: Response,
     @Body() body: { message: string; chatId: string },
   ): Promise<void> {
     const { message, chatId } = body;
     const chunks: Uint8Array[] = [];
-    const chatModel = await this.messageService.useChatModel(chatId);
-    const stream = await this.messageService.generateStream(chatModel, message);
+    const stream = await this.messageService.callModelStream(chatId, message);
 
     for await (const chunk of stream) {
       chunks.push(chunk);

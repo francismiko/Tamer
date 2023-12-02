@@ -18,20 +18,7 @@ export class MessageService {
   注意:除了题目是英文之外,所有的回答和交流用中文,保证用户的阅读体验.
   学生的英语水平:{level}.`;
 
-  getMessage(id: string): Promise<Message | null> {
-    return this.prisma.message.findUnique({
-      where: { id },
-    });
-  }
-
-  getMessagesByChatId(chat_id: string): Promise<Message[]> {
-    return this.prisma.message.findMany({
-      where: { chat_id },
-      orderBy: { create_at: 'asc' },
-    });
-  }
-
-  async useChatModel(chatId: string): Promise<BaseChatModel> {
+  private async useChatModel(chatId: string): Promise<BaseChatModel> {
     const chatModel = await this.prisma.chatModel.findUnique({
       where: { chat_id: chatId },
       select: { model: true },
@@ -51,18 +38,32 @@ export class MessageService {
     );
   }
 
-  async generateStream(
-    chatModel: BaseChatModel,
+  getMessage(id: string): Promise<Message | null> {
+    return this.prisma.message.findUnique({
+      where: { id },
+    });
+  }
+
+  getMessagesByChatId(chat_id: string): Promise<Message[]> {
+    return this.prisma.message.findMany({
+      where: { chat_id },
+      orderBy: { create_at: 'asc' },
+    });
+  }
+
+  async callModelStream(
+    chatId: string,
     message: string,
   ): Promise<IterableReadableStream<Uint8Array>> {
-    const httpParser = new HttpResponseOutputParser();
-
-    const chain = ChatPromptTemplate.fromMessages([
+    const parser = new HttpResponseOutputParser();
+    const promptTemplate = ChatPromptTemplate.fromMessages([
       ['system', this.systemTemplate],
       ['human', message],
-    ])
-      .pipe(chatModel)
-      .pipe(httpParser);
+    ]);
+
+    const chatModel = await this.useChatModel(chatId);
+
+    const chain = promptTemplate.pipe(chatModel).pipe(parser);
 
     const stream = await chain.stream({ level: 'CET-6' });
 
