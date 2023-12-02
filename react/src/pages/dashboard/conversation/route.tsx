@@ -151,11 +151,15 @@ function ConversationFooter(props: ConversationFooterProps): JSX.Element {
           className="inline-block rounded-md w-1/4 h-6 bg-info text-sm font-medium uppercase leading-normal text-slate-100 shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
           onClick={() =>
             setInputMessage(
-              `按步骤实现要求:1-在我所在水平的词汇库中随机选出五个英文词汇,用每一个单词生成一个相应的例句; 2-绘制成Markdown表格,包含有以下字段:<英文词汇>,<词性>(缩写),<中文释义>(完整的),<例句>; 3-仅输出最终的表格`,
+              `按步骤实现:
+              1-基于我所在水平的词汇库中随机选出5个不同词性的英文词汇和词组;
+              2-生成每个对应词汇的英文例句;
+              3-绘制成Markdown表格,包含有以下字段:<英文词汇>,<词性>(缩写),<中文释义>,<例句>(仅英文);
+              4-仅输出最终的表格`,
             )
           }
         >
-          单词
+          词汇
         </button>
         <button
           type="button"
