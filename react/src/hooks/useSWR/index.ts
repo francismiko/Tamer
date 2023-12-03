@@ -1,5 +1,3 @@
-import { useChat } from './useChat';
-import { useChatsByOwner } from './useChatsByOwner';
-import { useMessages } from './useMessages';
-
-export { useChat, useChatsByOwner, useMessages };
+export * from './useChat';
+export * from './useChatsByOwner';
+export * from './useMessages';
