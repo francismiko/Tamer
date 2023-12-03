@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "strict": true,
     "declaration": true,
     "removeComments": true,
@@ -14,12 +14,16 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false,
+    "allowJs": true,
+    "types": ["bun-types"]
   }
 }
