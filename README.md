@@ -16,6 +16,9 @@
 - [ ] 集成Vector DB
 - [ ] 集成Redis
 - [ ] 消息队列优化
+- [ ] 支持PDF文件解析
+- [ ] 支持CSV/XLSX文件解析
+- [ ] 支持音频流输出
 - [x] 部署API文档
 - [x] 配置React Router
 - [x] 集成TW Element
