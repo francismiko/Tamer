@@ -24,6 +24,5 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "allowJs": true,
-    "types": ["bun-types"]
   }
 }
