@@ -1,20 +1,20 @@
-import type { KeyedMutator } from 'swr';
-import useSWR from 'swr';
+import type { KeyedMutator } from "swr";
+import useSWR from "swr";
 
 export function useChatsByOwner(owner: string | undefined): {
-  chats: Chat[] | undefined;
-  isLoading: boolean;
-  isChatsError: Error;
-  chatsMutate: KeyedMutator<Chat[]>;
+	chats: Chat[] | undefined;
+	isLoading: boolean;
+	isChatsError: Error;
+	chatsMutate: KeyedMutator<Chat[]>;
 } {
-  const { data, error, isLoading, mutate } = useSWR<Chat[]>(
-    `/chat?owner=${owner}`,
-  );
+	const { data, error, isLoading, mutate } = useSWR<Chat[]>(
+		`/chat?owner=${owner}`,
+	);
 
-  return {
-    chats: data,
-    isLoading,
-    isChatsError: error,
-    chatsMutate: mutate,
-  };
+	return {
+		chats: data,
+		isLoading,
+		isChatsError: error,
+		chatsMutate: mutate,
+	};
 }

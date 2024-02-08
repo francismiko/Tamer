@@ -1,63 +1,63 @@
 type ChatModalProps = {
-  showChatModal: boolean;
-  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
-  owner: string | undefined;
-  chatsMutate: KeyedMutator<Chat[]>;
+	showChatModal: boolean;
+	setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+	owner: string | undefined;
+	chatsMutate: KeyedMutator<Chat[]>;
 };
 
 type ChatModalTitleProps = {
-  title: string | undefined;
-  setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+	title: string | undefined;
+	setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
+	setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ChatModalBodyProps = {
-  model: string;
-  setModel: React.Dispatch<React.SetStateAction<string>>;
+	model: string;
+	setModel: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type ChatModalFooterProps = {
-  handleCreate: () => Promise<void>;
-  isChatMutating: boolean;
-  isChatModelMutating: boolean;
+	handleCreate: () => Promise<void>;
+	isChatMutating: boolean;
+	isChatModelMutating: boolean;
 };
 
 type DeleteChatModalProps = {
-  chatId: string | undefined;
-  showDeleteChatModal: boolean;
-  setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
-  chatsMutate: KeyedMutator<Chat[]>;
+	chatId: string | undefined;
+	showDeleteChatModal: boolean;
+	setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+	chatsMutate: KeyedMutator<Chat[]>;
 };
 
 type LoadingProps = {
-  size?: string;
+	size?: string;
 };
 
 type SidebarBodyProps = ChatProps & ConversationListProps;
 
 type ChatProps = {
-  setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+	setShowChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ConversationListProps = {
-  chats: Chat[] | undefined;
-  activeChat: number | undefined;
-  setActiveChat: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
+	chats: Chat[] | undefined;
+	activeChat: number | undefined;
+	setActiveChat: React.Dispatch<React.SetStateAction<number | undefined>>;
+	setShowDeleteChatModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type ConversationContentProps = {
-  imageUrl: string | undefined;
-  model: string | undefined;
-  messages: Message[] | undefined;
-  scrollRef: React.RefObject<HTMLDivElement>;
+	imageUrl: string | undefined;
+	model: string | undefined;
+	messages: Message[] | undefined;
+	scrollRef: React.RefObject<HTMLDivElement>;
 };
 
 type ConversationFooterProps = {
-  inputMessage: string;
-  isMessageMutating: boolean;
-  handleSubmitMessage: (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => Promise<void>;
-  setInputMessage: React.Dispatch<React.SetStateAction<string>>;
+	inputMessage: string;
+	isMessageMutating: boolean;
+	handleSubmitMessage: (
+		event: React.FormEvent<HTMLFormElement>,
+	) => Promise<void>;
+	setInputMessage: React.Dispatch<React.SetStateAction<string>>;
 };

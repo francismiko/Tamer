@@ -1,3 +1,3 @@
 export function Dashboard(): JSX.Element {
-  return <></>;
+	return <></>;
 }

@@ -1,7 +1,7 @@
 type ModelCard = {
-  id: string;
-  iconUrl: string;
-  model: string;
-  parameters: string;
-  context: string;
+	id: string;
+	iconUrl: string;
+	model: string;
+	parameters: string;
+	context: string;
 };

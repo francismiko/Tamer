@@ -1,19 +1,16 @@
 {
   "name": "tamer",
   "version": "1.0.0",
+  "devDependencies": {
+    "@biomejs/biome": "1.5.3",
+    "bun-types": "^1.0.26",
+    "typescript": "^5.2.2"
+  },
   "private": true,
   "scripts": {
     "nest:dev": "cd ./nest && bun start:dev",
-    "react:dev": "cd ./react && bun dev"
+    "react:dev": "cd ./react && bun dev",
+    "format": "biome format --write ./"
   },
-  "workspaces": [
-    "react/*",
-    "nest/*"
-  ],
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
-    "@typescript-eslint/parser": "^6.13.1",
-    "typescript": "^5.2.2"
-  }
+  "workspaces": ["react/*", "nest/*"]
 }

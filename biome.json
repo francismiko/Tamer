@@ -8,5 +8,13 @@
 		"rules": {
 			"recommended": true
 		}
+	},
+	"files": {
+		"ignore": ["*/dist/*"]
+	},
+	"javascript": {
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
 	}
 }

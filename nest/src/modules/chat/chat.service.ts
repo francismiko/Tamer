@@ -1,51 +1,51 @@
-import { Injectable } from '@nestjs/common';
-import type { Chat } from '@prisma/client';
-import { PrismaService } from 'nestjs-prisma';
+import { Injectable } from "@nestjs/common";
+import type { Chat } from "@prisma/client";
+import { PrismaService } from "nestjs-prisma";
 
 @Injectable()
 export class ChatService {
-  constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService) {}
 
-  getChat(id: string): Promise<Chat | null> {
-    return this.prisma.chat.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        chat_model: true,
-      },
-    });
-  }
+	getChat(id: string): Promise<Chat | null> {
+		return this.prisma.chat.findUnique({
+			where: {
+				id,
+			},
+			include: {
+				chat_model: true,
+			},
+		});
+	}
 
-  getChatsByOwner(owner: string): Promise<Chat[]> {
-    return this.prisma.chat.findMany({
-      where: {
-        owner,
-      },
-      orderBy: {
-        create_at: 'desc',
-      },
-    });
-  }
+	getChatsByOwner(owner: string): Promise<Chat[]> {
+		return this.prisma.chat.findMany({
+			where: {
+				owner,
+			},
+			orderBy: {
+				create_at: "desc",
+			},
+		});
+	}
 
-  createChat({
-    owner,
-    title,
-  }: {
-    owner: string;
-    title: string;
-  }): Promise<Chat> {
-    return this.prisma.chat.create({
-      data: {
-        owner,
-        title,
-      },
-    });
-  }
+	createChat({
+		owner,
+		title,
+	}: {
+		owner: string;
+		title: string;
+	}): Promise<Chat> {
+		return this.prisma.chat.create({
+			data: {
+				owner,
+				title,
+			},
+		});
+	}
 
-  deleteChat(id: string): Promise<Chat | null> {
-    return this.prisma.chat.delete({
-      where: { id },
-    });
-  }
+	deleteChat(id: string): Promise<Chat | null> {
+		return this.prisma.chat.delete({
+			where: { id },
+		});
+	}
 }
