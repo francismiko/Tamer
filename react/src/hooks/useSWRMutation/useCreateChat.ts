@@ -20,6 +20,9 @@ export function useCreateChat(): {
 		},
 	);
 
+	console.log("useCreateChat");
+	
+
 	return {
 		createChat: trigger,
 		isChatMutating: isMutating,
