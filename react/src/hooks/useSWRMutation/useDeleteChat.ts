@@ -13,6 +13,8 @@ export function useDeleteChat(): {
 		},
 	);
 
+  console.log('isMutating', isMutating);
+
 	return {
 		deleteChat: trigger,
 		isChatMutating: isMutating,
